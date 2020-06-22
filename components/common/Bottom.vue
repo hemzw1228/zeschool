@@ -12,11 +12,11 @@
       <b-col cols="12" class="footer-share" md="2">
         <a href="#" class="share-item"
           ><span class="iconfont icon-weixin1" title="关注微信"></span>
-          <img class="share-img" src="../assets/img/weixin.jpg" alt="" />
+          <img class="share-img" src="~/assets/img/weixin.jpg" alt="" />
         </a>
         <a href="#" class="share-item"
           ><span class="iconfont icon-weibo" title="关注微博"></span>
-          <img class="share-img" src="../assets/img/xinlang.png" alt="" />
+          <img class="share-img" src="~/assets/img/xinlang.png" alt="" />
         </a>
       </b-col>
     </b-row>

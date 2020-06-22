@@ -1,3 +1,4 @@
+// 接受props:['navs']
 <template>
   <div>
     <!-- 二级响应式导航条 -->
@@ -10,47 +11,22 @@
       <!-- <b-navbar-brand class="top-logo" href="#"
         ><img src="../assets/img/logo.png" alt=""
       /></b-navbar-brand> -->
-      <a  :class="['logo ', navBarFixed !== false ? 'logo-fix' : '']" href="#"></a>
+      <a
+        :class="['logo ', navBarFixed !== false ? 'logo-fix' : '']"
+        href="#"
+      ></a>
       <b-icon-search
         class="h3 text-white m-search"
         @click="handleSearch"
       ></b-icon-search>
-      <b-navbar-toggle v-b-toggle.sidebar-1></b-navbar-toggle>
+      <!-- <b-navbar-toggle v-b-toggle.sidebar-1></b-navbar-toggle> -->
       <ul class="mzw-nav d-none  d-md-flex   ">
-        <li>
-          <router-link to="/a/b">link</router-link>
+        <li v-for="nav in navs" :key="nav.id">
+          <router-link :to="'/' + nav.navUrl">{{ nav.name }}</router-link>
           <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="/info">link</a>
-          <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="/info">link</a>
-          <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">link</a>
-          <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
+            <li v-for="item in nav.children" :key="item.id">
+              <a href="#">{{ item.name }}</a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -78,6 +54,7 @@ export default {
       navBarFixed: false
     }
   },
+  props: ['navs'],
   components: {
     BIconSearch
   },
@@ -87,7 +64,7 @@ export default {
   },
   methods: {
     watchScroll() {
-      var scrollTop =
+      const scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop
@@ -105,19 +82,20 @@ export default {
   }
 }
 </script>
+
 <style lang="less" scoped>
 @cor_b5: #0e518b;
 @cor_li: rgba(211, 208, 58, 0.8);
 @cor_drop_ul: rgba(18, 75, 139, 0.514);
-.logo{
+.logo {
   display: inline-block;
   width: 260px;
   height: 55px;
-  background:url(../assets/img/logo.png) no-repeat center center;
-  background-size:contain;
-  margin-left:100px ;
+  background: url(~assets/img/logo.png) no-repeat center center;
+  background-size: contain;
+  margin-left: 100px;
 }
-.logo-fix{
+.logo-fix {
   // background-size:200px;
   // background-position: 50%;
 }

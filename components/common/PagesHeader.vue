@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="header">
       <div class="logo">
-        <img src="../../assets/img/logo2.png" alt="" />
+        <img src="~assets/img/logo2.png" alt="" />
       </div>
       <div class="search">
         <input type="text" class="search-txt" v-model="searchtxt" />

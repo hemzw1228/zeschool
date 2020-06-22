@@ -5,14 +5,14 @@
       近期热点
     </div>
     <ul class="news-list">
-      <li class="list-item" v-for="item in items" :key="item">
-        <div class="item-info">
+      <li class="list-item" v-for="item in items" :key="item" style="text-align:left">
+        <div class="item-info" style="text-align:left">
           <span class="item-date">
             <b-icon icon="clock" class="clock-icon"></b-icon>2020.06.20</span
           >
           <span><b-icon icon="eye" class="eye-icon"></b-icon>999</span>
         </div>
-        <div class="item-title">
+        <div class="item-title" style="text-align:left">
           <a href="#">过勇赴浙江访问并看望慰问校友</a>
         </div>
       </li>
@@ -53,7 +53,7 @@ export default {
 }
 
 .list-item {
-  text-align: left;
+  text-align: left!important;
   border-bottom: 1px dotted #bababa;
   padding: 1em 0;
   font-size: 13px;
@@ -70,7 +70,9 @@ export default {
     }
   }
   .item-title {
+    text-align:left;
     a {
+      
       color: #555;
       text-decoration: none;
       &:hover {

@@ -24,6 +24,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/css/common.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -47,11 +48,25 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios'
   ],
+  bootstrapVue: {
+    componentPlugins: [
+      'CarouselPlugin',
+      'ImagePlugin',
+      'PaginationPlugin',
+      'NavbarPlugin',
+      'CardPlugin',
+      'ButtonPlugin',
+      'SidebarPlugin',
+      'LayoutPlugin'
+    ]
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {},
+  axios: {
+    baseURL:"http://47.105.223.27:8081/web"
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/

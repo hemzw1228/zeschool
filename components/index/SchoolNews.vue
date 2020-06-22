@@ -12,7 +12,7 @@
           </div>
           <div class="cul-title">
             <a href="#" class="title-link">
-              <div class="t-title">
+              <div class="t-title" style="text-align:left">
                 校园文化<span class="btn-more">>></span>
               </div>
             </a>
@@ -201,6 +201,7 @@
   text-decoration: none;
   color: #333;
   .t-title {
+    // text-align:left;
     color: #333;
   }
   .btn-more {
