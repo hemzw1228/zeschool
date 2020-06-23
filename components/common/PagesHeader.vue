@@ -7,14 +7,15 @@
       <div class="search">
         <input type="text" class="search-txt" v-model="searchtxt" />
         <span class="search-btn" @click="handleSearch"
-          ><b-icon icon="search"></b-icon
+          ><b-icon-search
+          ></b-icon-search
         ></span>
       </div>
       <div class="top-link">
         <a href="#">学生</a>|<a href="#">教务</a>|<a href="#">图书馆</a>
       </div>
     </div>
-    <b-navbar toggleable="md" class="nav-d" print>
+    <b-navbar toggleable="md" class="nav-d" print type="dark">
       <b-navbar-toggle
         class="menu-btn"
         v-b-toggle.sidebar-2
@@ -83,13 +84,14 @@
 </template>
 
 <script>
+import { BIconSearch } from 'bootstrap-vue'
 export default {
   data() {
     return {
       searchtxt: 'aa'
     }
   },
-  components: {},
+  components: { BIconSearch },
   methods: {
     handleSearch() {
       alert(this.searchtxt)

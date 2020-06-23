@@ -43,6 +43,9 @@ export default {
 .list-wrapper {
   // padding-bottom: 100px;
 }
+.news-list{
+  margin-bottom: 50px;
+}
 .list-title {
   color: #1c66ad;
   font-size: 25px;
@@ -69,6 +72,7 @@ export default {
     font-size: 15px;
     flex: 1;
     a {
+      text-align: left;
       display: inline-block;
       width: 100%;
       color: #333;

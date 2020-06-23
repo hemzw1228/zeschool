@@ -88,10 +88,25 @@ export default {
       spop: false
     }
   },
+
   async asyncData({ params, $axios }) {
-    let d = await $axios.$get('navbar/category')
-    console.log(d)
-    return { msg: d.msg, navs: d.data.slice(0, 8) }
+    let d = await $axios.$get('/api/web/navbar/category')
+
+    const filtered = d.data.filter(e => e.pid === 0)
+    console.log(filtered)
+    return { msg: d.msg, navs: filtered }
+  },
+  head() {
+    return {
+      title: '郑州电子商务职业学院',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'My custom description'
+        }
+      ]
+    }
   },
 
   components: {

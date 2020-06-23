@@ -19,13 +19,14 @@
         class="h3 text-white m-search"
         @click="handleSearch"
       ></b-icon-search>
-      <!-- <b-navbar-toggle v-b-toggle.sidebar-1></b-navbar-toggle> -->
+      <b-navbar-toggle target="sidebar-1" v-b-toggle.sidebar-1></b-navbar-toggle>
       <ul class="mzw-nav d-none  d-md-flex   ">
         <li v-for="nav in navs" :key="nav.id">
           <router-link :to="'/' + nav.navUrl">{{ nav.name }}</router-link>
           <ul class=" mw-subnav">
             <li v-for="item in nav.children" :key="item.id">
-              <a href="#">{{ item.name }}</a>
+              <router-link :to="{path:'/'+nav.navUrl+'/'+item.navUrl,query: { id: item.id}}">{{item.name}}</router-link>
+              <!-- <a :href="'/'+nav.navUrl+'/'+item.navUrl">{{item.name}}</a> -->
             </li>
           </ul>
         </li>

@@ -1,16 +1,21 @@
 <template>
   <div class="list-wrapper">
     <div class="top-title">
-      <span><b-icon icon="newspaper"></b-icon></span>
+      <span><b-icon-newspaper ></b-icon-newspaper></span>
       近期热点
     </div>
     <ul class="news-list">
-      <li class="list-item" v-for="item in items" :key="item" style="text-align:left">
+      <li
+        class="list-item"
+        v-for="item in items"
+        :key="item"
+        style="text-align:left"
+      >
         <div class="item-info" style="text-align:left">
           <span class="item-date">
-            <b-icon icon="clock" class="clock-icon"></b-icon>2020.06.20</span
+            <b-icon-clock  class="clock-icon"></b-icon-clock>2020.06.20</span
           >
-          <span><b-icon icon="eye" class="eye-icon"></b-icon>999</span>
+          <span><b-icon-eye class="eye-icon"></b-icon-eye>999</span>
         </div>
         <div class="item-title" style="text-align:left">
           <a href="#">过勇赴浙江访问并看望慰问校友</a>
@@ -20,11 +25,17 @@
   </div>
 </template>
 <script>
+import { BIconNewspaper,BIconEye,BIconClock } from 'bootstrap-vue'
 export default {
   data() {
     return {
       items: [1, 2, 3, 4, 5]
     }
+  },
+  components: {
+    BIconNewspaper,
+    BIconEye,
+    BIconClock
   }
 }
 </script>
@@ -53,7 +64,7 @@ export default {
 }
 
 .list-item {
-  text-align: left!important;
+  text-align: left !important;
   border-bottom: 1px dotted #bababa;
   padding: 1em 0;
   font-size: 13px;
@@ -70,9 +81,8 @@ export default {
     }
   }
   .item-title {
-    text-align:left;
+    text-align: left;
     a {
-      
       color: #555;
       text-decoration: none;
       &:hover {

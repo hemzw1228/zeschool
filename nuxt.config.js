@@ -10,7 +10,8 @@ export default {
   ** See https://nuxtjs.org/api/configuration-head
   */
   head: {
-    title: process.env.npm_package_name || '',
+    // title: process.env.npm_package_name || '',
+    title: "郑州电子商务职业学院",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -24,7 +25,9 @@ export default {
   ** Global CSS
   */
   css: [
-    '@/assets/css/common.css'
+    '@/assets/css/common.css',
+    '@/assets/iconfont/iconfont.css',
+
   ],
   /*
   ** Plugins to load before mounting the App
@@ -57,7 +60,8 @@ export default {
       'CardPlugin',
       'ButtonPlugin',
       'SidebarPlugin',
-      'LayoutPlugin'
+      'LayoutPlugin',
+      'BreadcrumbPlugin'
     ]
   },
   /*
@@ -65,7 +69,10 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL:"http://47.105.223.27:8081/web"
+    proxy: true
+  },
+  proxy: {
+    '/api/': { target: 'http://47.105.223.27:8081/', pathRewrite: {'^/api/': ''} }
   },
   /*
   ** Build configuration

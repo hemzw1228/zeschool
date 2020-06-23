@@ -20,20 +20,60 @@ import CommonList from '~/components/list/CommonList.vue'
 import Bottom from '~/components/common/Bottom.vue'
 import PagesHeader from '~/components/common/PagesHeader.vue'
 export default {
-  validate({ params }) {
+  validate({ params, query, $axios }) {
     // 必须是number类型
     // return /^\d+$/.test(params.id)
+
     return true
   },
   data() {
     return {}
   },
-  asyncData({ params, $axios }) {
-    console.log(!params.type)
+  async asyncData({ params, $axios, query, error }) {
+    // let res = await $axios.$post(
+    //   '/api/article/article/ArticleOrderByTime',
+    //   {
+    //     pageNumber: '1',
+    //     pageSize: '10',
+    //     categoryId: '21'
+    //   },
+    //   // {
+    //   //   headers: {
+    //   //     'Content-Type': 'application/x-www-form-urlencoded',
+    //   //   }
+    //   // }
+    // )
+
+    let res = await $axios.$post(
+      '/api/web/article/article/ArticleOrderByTime',
+      {
+        pageNumber: '1',
+        pageSize: '10',
+        categoryId: '21'
+      },
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': '*/*'
+        }
+      }
+    )
+    // console.log('aaaa')
+    console.log(res)
+    // console.log(res)
+    // if (res.status == 9999) {
+    //   error({
+    //     statusCode: 500,
+    //     message: 'err'
+    //   })
+    // }
+
     return {
-      type: params.type
+      // items: res.records,
+      // total: res.total
     }
   },
+  props: ['type'],
   components: {
     HotList,
     CommonList,

@@ -29,11 +29,16 @@
 </template>
 
 <script>
+import { BIconNewspaper,BIcon } from 'bootstrap-vue'
 export default {
   data() {
     return {
       items: [1, 2, 3, 4, 5]
     }
+  },
+  components: {
+    BIconNewspaper,
+    BIcon
   }
 }
 </script>
@@ -64,6 +69,12 @@ export default {
   a:hover {
     opacity: 0.9;
   }
+}
+.line-item {
+  text-align: left;
+}
+.title {
+  text-align: left;
 }
 .line-list {
   font-size: 12px;
