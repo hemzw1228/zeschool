@@ -23,7 +23,7 @@
       ></b-navbar-toggle>
       <ul class="m-nav d-none  d-md-flex   ">
         <li>
-          <router-link to="/a/a">a/a</router-link>
+          <router-link to="/newslist/a?id=3">a/a</router-link>
           <ul class=" mw-subnav">
             <li><a href="#">sub1</a></li>
             <li><a href="#">sub1</a></li>
@@ -32,7 +32,7 @@
           </ul>
         </li>
         <li>
-          <router-link to="/a/b">a/b</router-link>
+          <router-link to="/newslist/b?id=4">a/b</router-link>
           <ul class=" mw-subnav">
             <li><a href="#">sub1</a></li>
             <li><a href="#">sub1</a></li>
@@ -41,7 +41,7 @@
           </ul>
         </li>
         <li>
-          <router-link to="/a/c">a/c</router-link>
+          <router-link to="/newslist/c?id=5">a/c</router-link>
           <ul class=" mw-subnav">
             <li><a href="#">sub1</a></li>
             <li><a href="#">sub1</a></li>
@@ -50,7 +50,7 @@
           </ul>
         </li>
         <li>
-          <a href="/a/d">a/d</a>
+         <router-link to="/newslist/d?id=7">a/c</router-link>
           <ul class=" mw-subnav">
             <li><a href="#">sub1</a></li>
             <li><a href="#">sub1</a></li>

@@ -4,7 +4,7 @@
     <div class="news-container">
       <div class="l">
         {{ type }}
-        <CommonList></CommonList>
+        <CommonList :nlist="newsList"></CommonList>
       </div>
       <div class="r">
         <HotList></HotList>
@@ -19,6 +19,9 @@ import HotList from '~/components/list/HotList.vue'
 import CommonList from '~/components/list/CommonList.vue'
 import Bottom from '~/components/common/Bottom.vue'
 import PagesHeader from '~/components/common/PagesHeader.vue'
+import { BIconChevronDoubleRight } from 'bootstrap-vue'
+import axios from 'axios'
+
 export default {
   validate({ params, query, $axios }) {
     // 必须是number类型
@@ -26,60 +29,97 @@ export default {
 
     return true
   },
+  mounted() {
+    this.$myInjectedFunction('dfdfafda')
+  },
   data() {
     return {}
   },
-  async asyncData({ params, $axios, query, error }) {
-    // let res = await $axios.$post(
-    //   '/api/article/article/ArticleOrderByTime',
-    //   {
-    //     pageNumber: '1',
-    //     pageSize: '10',
-    //     categoryId: '21'
-    //   },
-    //   // {
-    //   //   headers: {
-    //   //     'Content-Type': 'application/x-www-form-urlencoded',
-    //   //   }
-    //   // }
-    // )
-
-    let res = await $axios.$post(
-      '/api/web/article/article/ArticleOrderByTime',
-      {
-        pageNumber: '1',
-        pageSize: '10',
-        categoryId: '21'
-      },
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': '*/*'
-        }
-      }
-    )
-    // console.log('aaaa')
-    console.log(res)
-    // console.log(res)
-    // if (res.status == 9999) {
-    //   error({
-    //     statusCode: 500,
-    //     message: 'err'
-    //   })
-    // }
-
-    return {
-      // items: res.records,
-      // total: res.total
+  async asyncData({ params, $axios, query, app }) {
+    let data = {
+      pageNumber: 1,
+      pageSize: 10,
+      id: 21
     }
+
+    console.log(data)
+    let res = await $axios.$post('/api/web/article/articleOrderByTime', data)
+    console.log('--------')
+    console.log(res.data.records)
+    return { newsList: res.data.records }
   },
+  // async asyncData({ params, $axios, query, error }) {
+  //   // let res = await $axios.$post(
+  //   //   '/api/article/article/ArticleOrderByTime',
+  //   //   {
+  //   //     pageNumber: '1',
+  //   //     pageSize: '10',
+  //   //     categoryId: '21'
+  //   //   },
+  //   //   // {
+  //   //   //   headers: {
+  //   //   //     'Content-Type': 'application/x-www-form-urlencoded',
+  //   //   //   }
+  //   //   // }
+  //   // )
+
+  //   var data = new FormData()
+  //   data.append('pageNumber', '1')
+  //   data.append('pageSize', '10')
+  //   data.append('categoryId', '21')
+  //   console.log(query.id)
+  //   let res = await $axios.$post(
+  //     '/api/web/article/article/ArticleOrderByTime',
+  //     data
+  //     // {
+  //     //   headers: {
+  //     //     'Content-Type': 'multipart/form-data',
+  //     //     'Accept': '*/*'
+  //     //   }
+  //     // }
+  //   )
+  //   // console.log('aaaa')
+  //   console.log(res)
+  //   // console.log(res)
+  //   // if (res.status == 9999) {
+  //   //   error({
+  //   //     statusCode: 500,
+  //   //     message: 'err'
+  //   //   })
+  //   // }
+
+  //   return {
+  //     items: res.records,
+  //     total: res.total
+  //   }
+  // },
   props: ['type'],
   components: {
     HotList,
     CommonList,
     Bottom,
     PagesHeader
-  }
+  },
+  // async beforeRouteUpdate(to, from, next) {
+  //   var data = new FormData()
+  //   data.append('pageNumber', '1')
+  //   data.append('pageSize', '10')
+  //   data.append('categoryId', '21')
+  //   console.log(this.$route.query.id)
+  //   let res = await axios.post(
+  //     '/api/web/article/article/ArticleOrderByTime',
+  //     data,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //         'Accept': '*/*'
+  //       }
+  //     }
+  //   )
+  //   console.log(res.data)
+  //   next()
+  // }
+  middleware: 'test'
 }
 </script>
 

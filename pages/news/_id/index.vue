@@ -3,7 +3,7 @@
     <PagesHeader></PagesHeader>
     <div class="news-container">
       <div class="l">
-        <Article></Article>
+        <Article :artInfo="artInfo"></Article>
         <RelativeList></RelativeList>
       </div>
       <div class="r">
@@ -28,8 +28,13 @@ export default {
   data() {
     return {}
   },
-  asyncData({ params, query, $axios }) {
-    return {}
+  async asyncData({ params, query, $axios }) {
+    let res = await $axios.$post('/api/web/article/articleDetails', {
+      id: params.id
+    })
+    console.log('-----')
+    console.log(res.data)
+    return { artInfo: res.data }
   },
   components: {
     Article,

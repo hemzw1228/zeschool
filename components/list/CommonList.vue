@@ -2,9 +2,11 @@
   <div class="list-wrapper">
     <div class="list-title">综合新闻</div>
     <ul class="news-list">
-      <li class="list-item" v-for="i in 20" :key="i">
+      <li class="list-item" v-for="i in nlist" :key="i.id">
         <span class="date-box">2020-06-20</span>
-        <div class="news-title"><a href="#">清华大学档案工作报告会举行</a></div>
+        <div class="news-title">
+          <nuxt-link :to="'/news/'+i.id">{{ i.title }}</nuxt-link>
+        </div>
       </li>
     </ul>
     <b-pagination
@@ -26,6 +28,7 @@ export default {
       items: [1, 2, 3, 4, 5]
     }
   },
+  props: ['nlist'],
   computed: {
     rows() {
       return 100
@@ -35,6 +38,9 @@ export default {
     getP(a) {
       alert(a)
     }
+  },
+  mounted() {
+    console.log(this.nlist)
   }
 }
 </script>
@@ -43,7 +49,7 @@ export default {
 .list-wrapper {
   // padding-bottom: 100px;
 }
-.news-list{
+.news-list {
   margin-bottom: 50px;
 }
 .list-title {
