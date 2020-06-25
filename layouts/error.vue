@@ -4,3 +4,10 @@
     <nuxt-link to="/">返回首页</nuxt-link>
   </div>
 </template>
+
+<script>
+export default {
+  layout:'common'
+}
+</script>
+

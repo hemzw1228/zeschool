@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <PagesHeader></PagesHeader>
+    <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
       <div class="l">
         <Article :artInfo="artInfo"></Article>
@@ -10,7 +10,7 @@
         <TimelineList></TimelineList>
       </div>
     </div>
-    <Bottom></Bottom>
+    <!-- <Bottom></Bottom> -->
   </div>
 </template>
 
@@ -18,8 +18,8 @@
 import Article from '~/components/content/Article.vue'
 import RelativeList from '~/components/list/RelativeList.vue'
 import TimelineList from '~/components/list/TimelineList.vue'
-import Bottom from '~/components/common/Bottom.vue'
-import PagesHeader from '~/components/common/PagesHeader.vue'
+// import Bottom from '~/components/common/Bottom.vue'
+// import PagesHeader from '~/components/common/PagesHeader.vue'
 export default {
   validate({ params }) {
     // 必须是number类型
@@ -36,12 +36,13 @@ export default {
     console.log(res.data)
     return { artInfo: res.data }
   },
+  layout:'common',
   components: {
     Article,
     RelativeList,
     TimelineList,
-    Bottom,
-    PagesHeader
+    // Bottom,
+    // PagesHeader
   }
 }
 </script>
@@ -67,7 +68,9 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 990px;
-  margin: 50px auto;
+  // margin: 50px auto;
+  margin: 0 auto;
+  padding:50px 0;
   .l {
     width: 650px;
   }

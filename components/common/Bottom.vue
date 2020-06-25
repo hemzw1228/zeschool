@@ -1,18 +1,24 @@
 <template>
   <b-container class="footer-container" fluid>
     <b-row class="footer-link" align-h="center">
-      <b-col cols="12" md="8"
-        ><a class="link-item" href="#">link</a>
-        <a class="link-item" href="#">link</a>
-        <a class="link-item" href="#">link</a>
-        <a class="link-item" href="#">link</a>
-        <a class="link-item" href="#">link</a>
-        <a class="link-item" href="#">linkdddddddddddd</a></b-col
-      >
+      <b-col cols="12" md="8">
+        <a
+          class="link-item"
+          :href="link.url"
+          v-for="link in links"
+          :key="link.id"
+          >{{ link.name }}</a
+        >
+        <!-- <a class="link-item" href="#" v-for="link in 6" :key="link">{{links[0].name}}</a>  -->
+      </b-col>
       <b-col cols="12" class="footer-share" md="2">
         <a href="#" class="share-item"
           ><span class="iconfont icon-weixin1" title="关注微信"></span>
           <img class="share-img" src="~/assets/img/weixin.jpg" alt="" />
+        </a>
+        <a href="#" class="share-item"
+          ><span class="iconfont icon-weibo" title="关注微博"></span>
+          <img class="share-img" src="~/assets/img/xinlang.png" alt="" />
         </a>
         <a href="#" class="share-item"
           ><span class="iconfont icon-weibo" title="关注微博"></span>
@@ -32,7 +38,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['links']
+}
 </script>
 <style lang="less" scoped>
 @media screen and (max-width: 768px) {
@@ -95,6 +103,7 @@ export default {}
     margin-right: 12px;
     text-decoration: none;
     color: #000;
+    line-height: 50px;
 
     .iconfont {
       font-size: 28px;
@@ -116,10 +125,17 @@ export default {}
       background-color: #e62226;
       color: #fff;
     }
+    &:nth-child(3):hover {
+      background-color: #e62226;
+      color: #fff;
+    }
     &:nth-child(1):hover .share-img {
       display: block;
     }
     &:nth-child(2):hover .share-img {
+      display: block;
+    }
+    &:nth-child(3):hover .share-img {
       display: block;
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <PagesHeader></PagesHeader>
+    <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
       <div class="l">
         {{ type }}
@@ -10,15 +10,15 @@
         <HotList></HotList>
       </div>
     </div>
-    <Bottom></Bottom>
+    <!-- <Bottom></Bottom> -->
   </div>
 </template>
 
 <script>
 import HotList from '~/components/list/HotList.vue'
 import CommonList from '~/components/list/CommonList.vue'
-import Bottom from '~/components/common/Bottom.vue'
-import PagesHeader from '~/components/common/PagesHeader.vue'
+// import Bottom from '~/components/common/Bottom.vue'
+// import PagesHeader from '~/components/common/PagesHeader.vue'
 import { BIconChevronDoubleRight } from 'bootstrap-vue'
 import axios from 'axios'
 
@@ -97,8 +97,8 @@ export default {
   components: {
     HotList,
     CommonList,
-    Bottom,
-    PagesHeader
+    // Bottom,
+    // PagesHeader
   },
   // async beforeRouteUpdate(to, from, next) {
   //   var data = new FormData()
@@ -119,7 +119,8 @@ export default {
   //   console.log(res.data)
   //   next()
   // }
-  middleware: 'test'
+  middleware: 'test',
+  layout:'common'
 }
 </script>
 
@@ -143,7 +144,8 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 990px;
-  margin: 50px auto;
+  margin: 0px auto;
+  padding: 50px 0;
   .l {
     width: 650px;
     // height: 500px;

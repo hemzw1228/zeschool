@@ -39,7 +39,7 @@
         <!-- 校园活动专题 -->
         <b-row align-h="center" class="spec-list">
           <b-col order="2" cols="12" lg="6" class="spec-item">
-            <a href="#" class="img-a">
+            <a href="#" class="img-a reveal-left">
               <b-img
                 fluid-grow
                 src="https://www.tsinghua.edu.cn/images/intothu-2_03.jpg"
@@ -57,7 +57,7 @@
                   </div>
                 </a>
               </div>
-              <a href="#" class="img-a">
+              <a href="#" class="img-a reveal-right">
                 <b-img
                   fluid-grow
                   src="https://www.tsinghua.edu.cn/images/pic4.jpg"
@@ -71,6 +71,60 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      // scrollReveal:scrollReveal()
+    }
+  },
+  mounted() {
+    if (process.client) {
+      // var s = require('scrollreveal')
+     var s = require('scrollreveal')
+     var scrollReveal = s.default()
+      // console.log(s)
+      scrollReveal.reveal('.reveal-left', {
+        // 动画的时长
+        duration: 500,
+        // 延迟时间
+        delay: 500,
+        // 动画开始的位置，'bottom', 'left', 'top', 'right'
+        origin: 'left',
+        // 回滚的时候是否再次触发动画
+        reset: false,
+        // 在移动端是否使用动画
+        mobile: false,
+        // 滚动的距离，单位可以用%，rem等
+        distance: '200px',
+        // 其他可用的动画效果
+        opacity: 0.05,
+        easing: 'cubic-bezier(0.5, 0, 0, 1)',
+        scale: 1
+      })
+      scrollReveal.reveal('.reveal-right', {
+        // 动画的时长
+        duration: 500,
+        // 延迟时间
+        delay: 0,
+        // 动画开始的位置，'bottom', 'left', 'top', 'right'
+        origin: 'right',
+        // 回滚的时候是否再次触发动画
+        reset: false,
+        // 在移动端是否使用动画
+        mobile: false,
+        // 滚动的距离，单位可以用%，rem等
+        distance: '200px',
+        // 其他可用的动画效果
+        opacity: 0.05,
+        easing: 'cubic-bezier(0.5, 0, 0, 1)',
+        scale: 0.001
+      })
+    }
+  }
+}
+</script>
 
 <style lang="less" scoped>
 .cul-container {

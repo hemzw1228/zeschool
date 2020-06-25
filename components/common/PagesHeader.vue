@@ -7,8 +7,7 @@
       <div class="search">
         <input type="text" class="search-txt" v-model="searchtxt" />
         <span class="search-btn" @click="handleSearch"
-          ><b-icon-search
-          ></b-icon-search
+          ><b-icon-search></b-icon-search
         ></span>
       </div>
       <div class="top-link">
@@ -23,39 +22,17 @@
       ></b-navbar-toggle>
       <ul class="m-nav d-none  d-md-flex   ">
         <li>
-          <router-link to="/newslist/a?id=3">a/a</router-link>
-          <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-          </ul>
+          <router-link to="/">首页</router-link>
         </li>
-        <li>
-          <router-link to="/newslist/b?id=4">a/b</router-link>
+        <li v-for="nav in navs" :key="nav.id">
+          <!-- 根据一级导航类型渲染导航页面（导航内容）|（导航列表页/**/child(0).navurl） -->
+          <router-link :to="'/' + nav.navUrl">{{ nav.name }}</router-link>
           <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-          </ul>
-        </li>
-        <li>
-          <router-link to="/newslist/c?id=5">a/c</router-link>
-          <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-          </ul>
-        </li>
-        <li>
-         <router-link to="/newslist/d?id=7">a/c</router-link>
-          <ul class=" mw-subnav">
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
-            <li><a href="#">sub1</a></li>
+            <li v-for="snav in nav.children" :key="snav.id">
+              <router-link :to="'/' + nav.navUrl + '/' + snav.navUrl">{{
+                snav.name
+              }}</router-link>
+            </li>
           </ul>
         </li>
       </ul>
@@ -91,6 +68,7 @@ export default {
       searchtxt: 'aa'
     }
   },
+  props: ['navs'],
   components: { BIconSearch },
   methods: {
     handleSearch() {
@@ -190,6 +168,7 @@ export default {
   }
   .search-btn {
     display: inline-block;
+    margin-left: -5px;
     height: 35px;
     width: 35px;
     background-color: @cor_b5;

@@ -16,7 +16,7 @@
       <a href="#">
         <b-carousel-slide
           class="slide-item"
-          :caption="msg"
+          caption="第一张"
           text="这是一个轮播的图，你可以点击查看详情"
           img-src="https://www.tsinghua.edu.cn/__local/C/7F/0B/6E39229562CE1533AC64C95135B_C61E574F_7D43A.jpg"
         >
@@ -51,7 +51,7 @@
     <!-- 通知 -->
     <Social></Social>
     <!-- 底部 footer -->
-    <Bottom></Bottom>
+    <!-- <Bottom></Bottom> -->
     <!-- 底部链接 -->
 
     <!-- 搜索 -->
@@ -74,7 +74,7 @@ import Special from '~/components/index/SpecialNews.vue'
 
 import School from '~/components/index/SchoolNews.vue'
 import Social from '~/components/index/Social.vue'
-import Bottom from '~/components/common/Bottom.vue'
+// import Bottom from '~/components/common/Bottom.vue'
 import NavBar from '~/components/index/NavBarIndex.vue'
 import Notice from '~/components/index/Notice.vue'
 import { darkblue } from 'color-name'
@@ -90,11 +90,27 @@ export default {
   },
 
   async asyncData({ params, $axios }) {
-    let d = await $axios.$get('/api/web/navbar/category')
+    // 1---获取导航
+    let navs = await $axios.$get('/api/web/navbar/category')
+    const fnavs = navs.data.filter(e => e.pid === 0)
+    // console.log(fnavs)
+    // 2---获取轮播 (接口：web/article/articleBySlider)
 
-    const filtered = d.data.filter(e => e.pid === 0)
-    console.log(filtered)
-    return { msg: d.msg, navs: filtered }
+    //获取文章
+    // 3---tas接口(web/article/articleByTagId)
+    // 3.1.获取要闻（tagid=1,取10个，2张带图片）
+    // 3.2.获取通知 (tagid=2, 取4个)
+    // 3.3.获取人文（tagid=3,取1个）
+    // 3.3.获取校内活动（tagid=4,取2个）
+    // 3.4.获取专题（tagid=5,取4个）
+
+    // 获取友情链接
+    // 4---获取底部信息接口口(web/link/qryLink)
+    // 需要6个
+
+    // 获取版权信息 (web/base/baseInfo)
+
+    return {  navs: fnavs }
   },
   head() {
     return {
@@ -113,7 +129,7 @@ export default {
     Special,
     School,
     Social,
-    Bottom,
+    // Bottom,
     NavBar,
     Notice
   },
@@ -129,7 +145,8 @@ export default {
     handleSearch() {
       alert(this.schTxt)
     }
-  }
+  },
+  layout:"default"
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <PagesHeader></PagesHeader>
+    <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
       <div class="l">
         <div class="side-nav">
@@ -40,13 +40,13 @@
         </div>
       </div>
     </div>
-    <Bottom></Bottom>
+    <!-- <Bottom></Bottom> -->
   </div>
 </template>
 
 <script>
-import Bottom from '~/components/common/Bottom.vue'
-import PagesHeader from '~/components/common/PagesHeader.vue'
+// import Bottom from '~/components/common/Bottom.vue'
+// import PagesHeader from '~/components/common/PagesHeader.vue'
 export default {
   validate({ params }) {
     // 必须是number类型
@@ -83,9 +83,10 @@ export default {
   //   alert(1)
   // },
   components: {
-    Bottom,
-    PagesHeader
+    // Bottom,
+    // PagesHeader
   },
+  layout:'common',
   methods: {
     getdata() {
       alert(this.fnav)
