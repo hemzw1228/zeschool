@@ -39,11 +39,11 @@ export default {
     let data = {
       pageNumber: 1,
       pageSize: 10,
-      id: 21
+      url: params.type
     }
 
     console.log(data)
-    let res = await $axios.$post('/api/web/article/articleOrderByTime', data)
+    let res = await $axios.$post('/api/web/article/articleDetailsByUrl', data)
     console.log('--------')
     console.log(res.data.records)
     return { newsList: res.data.records }
@@ -125,6 +125,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@media screen and (max-width:1400px) {
+  .news-container{
+    width: 100%!important;
+  }
+  
+}
 @media screen and (max-width: 1000px) {
   .r {
     display: none;
@@ -143,16 +149,16 @@ export default {
 .news-container {
   display: flex;
   justify-content: space-between;
-  width: 990px;
+  width: 1400px;
   margin: 0px auto;
   padding: 50px 0;
   .l {
-    width: 650px;
+    width: 70%;
     // height: 500px;
     // background-color: pink;
   }
   .r {
-    width: 290px;
+    width: 20%;
     // height: 500px;
     // background-color: blue;
   }

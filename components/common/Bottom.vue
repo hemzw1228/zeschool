@@ -20,10 +20,10 @@
           ><span class="iconfont icon-weibo" title="关注微博"></span>
           <img class="share-img" src="~/assets/img/xinlang.png" alt="" />
         </a>
-        <a href="#" class="share-item"
+        <!-- <a href="#" class="share-item"
           ><span class="iconfont icon-weibo" title="关注微博"></span>
           <img class="share-img" src="~/assets/img/xinlang.png" alt="" />
-        </a>
+        </a> -->
       </b-col>
     </b-row>
     <b-row class="footer-info" align-h="center">

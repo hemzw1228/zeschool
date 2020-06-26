@@ -4,7 +4,9 @@
     <div class="news-container">
       <div class="l">
         <Article :artInfo="artInfo"></Article>
-        <RelativeList></RelativeList>
+        <div class="bottom-list">
+          <RelativeList></RelativeList>
+        </div>
       </div>
       <div class="r">
         <TimelineList></TimelineList>
@@ -36,11 +38,11 @@ export default {
     console.log(res.data)
     return { artInfo: res.data }
   },
-  layout:'common',
+  layout: 'common',
   components: {
     Article,
     RelativeList,
-    TimelineList,
+    TimelineList
     // Bottom,
     // PagesHeader
   }
@@ -48,7 +50,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// 1000下 内容页 右侧栏消失
+// 1400下 内容页 右侧栏消失
+@media screen and (max-width: 1400px) {
+  // .r {
+  //   display: none;
+  // }
+
+  .news-container {
+    width: 100% !important;
+  }
+}
 @media screen and (max-width: 1000px) {
   .r {
     display: none;
@@ -67,15 +78,18 @@ export default {
 .news-container {
   display: flex;
   justify-content: space-between;
-  width: 990px;
+  width: 1400px;
   // margin: 50px auto;
   margin: 0 auto;
-  padding:50px 0;
+  padding: 50px 0;
   .l {
-    width: 650px;
+    width: 70%;
+  }
+  .bottom-list {
+    padding: 0 50px;
   }
   .r {
-    width: 290px;
+    width: 20%;
   }
 }
 </style>

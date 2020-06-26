@@ -26,12 +26,22 @@
         </li>
         <li v-for="nav in navs" :key="nav.id">
           <!-- 根据一级导航类型渲染导航页面（导航内容）|（导航列表页/**/child(0).navurl） -->
-          <router-link :to="'/' + nav.navUrl">{{ nav.name }}</router-link>
+          <!-- <router-link :to="'/' + nav.id" @click.native="passid(nav.id)">{{ nav.name }}</router-link> -->
+          <router-link
+            :to="getToUrl(nav)"
+            @click.native="passNav(nav, nav.children)"
+            >{{ nav.name }}</router-link
+          >
+          <!-- <router-link :to="getToUrl(nav)" @click.native="passid(nav.id)">{{ nav.name }}</router-link> -->
+
+          <!-- <router-link :to="{name:'fnav',params:{fnav:nav.url}}">{{ nav.name }}</router-link> -->
           <ul class=" mw-subnav">
             <li v-for="snav in nav.children" :key="snav.id">
-              <router-link :to="'/' + nav.navUrl + '/' + snav.navUrl">{{
-                snav.name
-              }}</router-link>
+              <router-link
+                :to="'/' + nav.navUrl + '/' + snav.navUrl"
+                @click.native="passNav(snav, nav.children)"
+                >{{ snav.name }}</router-link
+              >
             </li>
           </ul>
         </li>
@@ -73,6 +83,41 @@ export default {
   methods: {
     handleSearch() {
       alert(this.searchtxt)
+    },
+    mounted() {
+      // console.log(this.navs)
+    },
+    passNav(nav, childrenNav) {
+      // 存储的nav 和渲染的url 逻辑 一样
+
+      if (nav.pid == 0 && nav.children[0]) {
+        console.log('点了一级导航')
+        console.log(nav.children[0])
+        console.log(childrenNav)
+        console.log('点击结束')
+
+        this.$store.commit('passNav', nav.children[0])
+        this.$store.commit('passChildrenNav',  childrenNav)
+      } else {
+        console.log('点了二级子导航')
+        console.log(nav)
+        console.log(childrenNav)
+        console.log('点击结束')
+        this.$store.commit('passNav', nav)
+        this.$store.commit('passChildrenNav',  childrenNav)
+      }
+    },
+    getToUrl(nav) {
+      // 渲染一级导航的url
+      // 有子导航的直接渲染为第一个孩子的url
+      // 否则为内容一级导航内容页
+      let a = '/' + nav.navUrl
+      if (nav.children[0]) {
+        // console.log("1111")
+        // console.log((nav.children[0]).navUrl)
+        a = a + '/' + nav.children[0].navUrl
+      }
+      return a
     }
   }
 }
@@ -82,8 +127,8 @@ export default {
 @cor_b5: #0e518b;
 @cor_li: rgba(211, 208, 58, 0.8);
 @cor_drop_ul: rgba(18, 75, 139, 0.514);
-// 头部1200以下宽度全屏
-@media screen and (max-width: 1200px) {
+// 头部1400以下宽度全屏
+@media screen and (max-width: 1400px) {
   .header {
     width: 100% !important;
     .logo {
@@ -124,7 +169,7 @@ export default {
   background-color: #fff;
 }
 .header {
-  width: 1200px;
+  width: 1400px;
   margin: 0 auto;
   height: 120px;
   display: flex;

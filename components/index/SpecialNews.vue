@@ -1,6 +1,6 @@
 <template>
   <div class="special-container clearfix">
-    <div class="w14">
+    <div class="w14 reveal-vis">
       <div class="news-title">校园.要闻</div>
       <!-- 要闻1 -->
       <div class="row-list row1">
@@ -57,7 +57,37 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data(){
+    return {}
+  },
+  mounted(){
+    if (process.client) {
+      // var s = require('scrollreveal')
+     var s = require('scrollreveal')
+     var scrollReveal = s.default()
+      // console.log(s)
+      scrollReveal.reveal('.reveal-vis', {
+        // 动画的时长
+        duration: 500,
+        // 延迟时间
+        delay: 500,
+        // 动画开始的位置，'bottom', 'left', 'top', 'right'
+        origin: 'bottom',
+        // 回滚的时候是否再次触发动画
+        reset: false,
+        // 在移动端是否使用动画
+        mobile: false,
+        // 滚动的距离，单位可以用%，rem等
+        distance: '0px',
+        // 其他可用的动画效果
+        opacity: 0.05,
+        easing: 'ease',
+        scale: 1
+      })
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

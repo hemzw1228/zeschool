@@ -1,7 +1,7 @@
 <template>
   <div class="social-container">
     <div class="w14">
-      <div class="social-content">
+      <div class="social-content reveal-vis">
         <div class="social-title">专题专栏</div>
         <div class="social-list">
           <div class="item" v-for="i in 4" :key="i">

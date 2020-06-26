@@ -31,7 +31,7 @@
           <div class="crumb-nav">
             <b-breadcrumb :items="items" class="mcurmb"></b-breadcrumb>
           </div>
-          <div class="info-title">{{snav}}</div>
+          <div class="info-title">{{ snav }}</div>
           <div class="content">
             清华大学的前身清华学堂始建于1911年，1912年更名为清华学校。1928年更名为国立清华大学。1937年抗日战争全面爆发后南迁长沙，与北京大学、南开大学组建国立长沙临时大学，1938年迁至昆明改名为国立西南联合大学。1946年迁回清华园，设有文、法、理、工、农等5个学院、26个系。
             1952年全国高等学校院系调整后，清华大学成为一所多科性工业大学，重点为国家培养工程技术人才，被誉为“红色工程师的摇篮”。改革开放以来，清华大学逐步确立了建设世界一流大学的长远目标，进入了蓬勃发展的新时期。学校先后恢复或新建了理科、经济、管理和文科类学科，并成立了研究生院和继续教育学院。1999年，与中央工艺美术学院合并成立清华大学美术学院。2012年，原中国人民银行研究生部并入，成为清华大学五道口金融学院。在国家和社会的大力支持下，通过实施“211工程”“985工程”，开展“双一流”建设，清华大学在人才培养、科学研究、社会服务、文化传承创新、国际合作交流等方面都取得了长足进展。目前，清华大学共设20个学院、59个系，已成为一所具有理学、工学、文学、艺术学、历史学、哲学、经济学、管理学、法学、教育学和医学等11个学科门类的综合性、研究型大学。
@@ -72,13 +72,18 @@ export default {
     }
   },
   asyncData({ params, $axios }) {
-      console.log(this)
+    console.log(this)
     return {
       fnav: params.fnav,
       snav: params.snav
     }
   },
-//   props: ['fnav', 'snav'],
+  created() {
+    console.log('列表页使用vuex中nav')
+    console.log(this.$store.state.childrenNav)
+    console.log(this.$store.state.nav)
+  },
+  //   props: ['fnav', 'snav'],
   // beforeRouteUpdate(to, from, next) {
   //   alert(1)
   // },
@@ -86,7 +91,7 @@ export default {
     // Bottom,
     // PagesHeader
   },
-  layout:'common',
+  layout: 'common',
   methods: {
     getdata() {
       alert(this.fnav)

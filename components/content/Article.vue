@@ -2,6 +2,7 @@
   <div class="article-container">
     <h1 class="article-title">{{ artInfo.title }}</h1>
     <hr />
+    <!-- <div class="article-content" v-html="artInfo.content"></div> -->
     <div class="article-content" v-html="artInfo.content"></div>
     <div class="date-wrapper">
       <div class="article-time">
@@ -22,7 +23,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 // 1200以下内容区域样式
 @media screen and(max-width: 1000px) {
   .article-content {
@@ -52,6 +53,12 @@ export default {
     text-indent: 2em;
     text-align: left;
     line-height: 2;
+    img {
+      width: calc(80% - 20px);
+    }
+    p{
+      text-align: left;
+    }
   }
 
   .date-wrapper {
