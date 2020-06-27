@@ -12,7 +12,7 @@
           </div>
           <div class="cul-title">
             <a href="#" class="title-link">
-              <div class="t-title" style="text-align:left">
+              <div class="t-title reveal-left" >
                 校园文化<span class="btn-more">>></span>
               </div>
             </a>
@@ -87,7 +87,7 @@ export default {
       // console.log(s)
       scrollReveal.reveal('.reveal-left', {
         // 动画的时长
-        duration: 800,
+        duration: 1000,
         // 延迟时间
         delay: 200,
         // 动画开始的位置，'bottom', 'left', 'top', 'right'
@@ -105,7 +105,7 @@ export default {
       })
       scrollReveal.reveal('.reveal-right', {
         // 动画的时长
-        duration: 800,
+        duration: 1000,
         // 延迟时间
         delay: 200,
         // 动画开始的位置，'bottom', 'left', 'top', 'right'
@@ -246,10 +246,11 @@ export default {
 .cul-title {
   padding: 40px;
   font-size: 28px;
-  text-align: left;
+  
   .t-title {
     font-size: 28px;
     color: #333;
+    text-align: left;
   }
 }
 .title-link {

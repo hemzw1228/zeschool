@@ -2,6 +2,57 @@
 ### 接口
 - url:http://47.105.223.27:8081
 - 导航 /web/navbar/category
+```json
+ {
+            "id": 8,
+            "createTime": "2020-06-22 13:19:32",
+            "updateTime": "2020-06-26 21:56:23",
+            "pid": 0,
+            "name": "学校概况",
+            "description": "一级导航",
+            "sort": 1,
+            "status": 1,
+            "icon": null,
+            "navType": 0,
+            "navUrl": "xxgk",
+            "parent": null,
+            "children": [
+                {
+                    "id": 15,
+                    "createTime": null,
+                    "updateTime": null,
+                    "pid": 8,
+                    "name": "学校简介",
+                    "description": "二级分类",
+                    "sort": null,
+                    "status": 1,
+                    "icon": null,
+                    "navType": 2,
+                    "navUrl": "xxjj",
+                    "parent": null,
+                    "children": null
+                },
+                {
+                    "id": 16,
+                    "createTime": null,
+                    "updateTime": null,
+                    "pid": 8,
+                    "name": "现任领导",
+                    "description": "二级分类",
+                    "sort": null,
+                    "status": 1,
+                    "icon": null,
+                    "navType": 2,
+                    "navUrl": "ld",
+                    "parent": null,
+                    "children": null
+                }
+            ]
+        },
+```
+
+
+
 - 文章列表时间排序 /web/article/articleOrderByTime
 ```
     {
@@ -28,7 +79,9 @@
 ```
     {"id":21}
 ```
-- 导航获取内容或列表 /web/article/articleDetailsByUrl  
+- :star:导航获取内容或列表 /web/article/articleDetailsByUrl  
+
+  - 神奇的接口，根据url即能获取**二级导航内容**又能获取**新闻列表**
 
   ```
    参数url   pageNumber pageSize 
@@ -148,10 +201,34 @@
 - 校园活动（标签id:4）
 - 专题专栏（标签id:5）
 
+
+
+### 二级导航页面
+
+- 导航内容（接口 /web/article/articleDetailsByUrl  ）
+- 侧边栏导航信息 （vuex 存储在 **this.$store.state.childrenNav**）
+    - 首次进入页面可this.$store.childrenNav为空
+    - 在页面监听 this.$store.navs 更新侧边栏信息
+- 直接进入需要判断 ：fanv 和 snav
+
+### 新闻列表页
+
+- url (newslist/:type)
+- 通过type 利用 接口（/web/article/articleDetailsByUrl ）获取新闻列表
+- 通过newslist 获取点击量最高的新闻列表
+
+### 新闻内容页面
+
+- url(/news/id)
+- 通过id获取新闻信息（内容）
+- 通过newslist url 获取 最新新闻列表
+- 通过categoryId 获取相关新闻列表
+
 ### 其他页面数据渲染
 
 - layout --->common 
 - 在 common 获取 header 和 bottom 的数据
+- 在common 中获取 navs 存储在 this.$store.state.navs
 
 ### 导航条路由解决思路
 

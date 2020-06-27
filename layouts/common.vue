@@ -19,22 +19,22 @@ export default {
     Header
   },
   async mounted() {
+    // console.log('common layout')
     //
     // 1 导航 (get::web/navbar/category )
     let res_navs = await axios.get('/api/web/navbar/category')
     this.navs = res_navs.data.data.filter(e => {
       return e.pid == 0
     })
-    console.log('----res_navs---')
-    console.log(res_navs.data.data)
-    //   获取底部友情链接和版权信息
+    this.$store.commit('storeNavs', this.navs)
+
     // 2 友情链接 (post::web/link/qryLink  args::pageNumber:1,pageSize:6)
     let res_link = await axios.post('/api/web/link/qryLink', {
       pageNumber: 1,
       pageSize: 6
     })
     this.links = res_link.data.data.records
-    console.log('----res_link---')
+    // console.log('----res_link---')
     // 3 信息
   }
 }

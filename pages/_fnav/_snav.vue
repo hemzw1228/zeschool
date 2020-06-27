@@ -4,24 +4,15 @@
     <div class="news-container">
       <div class="l">
         <div class="side-nav">
-          <div class="side-title">{{ $route.params }}</div>
+          <div class="side-title">{{ fnavInfo.name }}</div>
           <ul class="side-list">
-            <li class="item">
-              <a href="#">{{ fnav }}</a>
-            </li>
-            <li class="item">
-              <router-link to="/a/b" class="active">b</router-link>
-            </li>
-            <li class="item">
-              <router-link to="/a/c" class="active">c</router-link>
-            </li>
-            <li class="item">
-              <!-- <router-link to="/a/d" class="active">d</router-link> -->
-              <a href="/a/d" class="active">d</a>
-            </li>
-            <li class="item">
-              <!-- <router-link to="/a/e" class="active">e</router-link> -->
-              <a href="/a/e" class="active">e</a>
+            <li class="item" v-for="nav in sideNavs" :key="nav.id">
+              <router-link
+                @click.native="passNav(nav)"
+                :to="'/' + fnavInfo.navUrl + '/' + nav.navUrl"
+                :class="nav.navUrl == navInfo.navUrl ? 'active' : ''"
+                >{{ nav.name }}</router-link
+              >
             </li>
           </ul>
         </div>
@@ -31,12 +22,8 @@
           <div class="crumb-nav">
             <b-breadcrumb :items="items" class="mcurmb"></b-breadcrumb>
           </div>
-          <div class="info-title">{{ snav }}</div>
-          <div class="content">
-            清华大学的前身清华学堂始建于1911年，1912年更名为清华学校。1928年更名为国立清华大学。1937年抗日战争全面爆发后南迁长沙，与北京大学、南开大学组建国立长沙临时大学，1938年迁至昆明改名为国立西南联合大学。1946年迁回清华园，设有文、法、理、工、农等5个学院、26个系。
-            1952年全国高等学校院系调整后，清华大学成为一所多科性工业大学，重点为国家培养工程技术人才，被誉为“红色工程师的摇篮”。改革开放以来，清华大学逐步确立了建设世界一流大学的长远目标，进入了蓬勃发展的新时期。学校先后恢复或新建了理科、经济、管理和文科类学科，并成立了研究生院和继续教育学院。1999年，与中央工艺美术学院合并成立清华大学美术学院。2012年，原中国人民银行研究生部并入，成为清华大学五道口金融学院。在国家和社会的大力支持下，通过实施“211工程”“985工程”，开展“双一流”建设，清华大学在人才培养、科学研究、社会服务、文化传承创新、国际合作交流等方面都取得了长足进展。目前，清华大学共设20个学院、59个系，已成为一所具有理学、工学、文学、艺术学、历史学、哲学、经济学、管理学、法学、教育学和医学等11个学科门类的综合性、研究型大学。
-            面向未来，清华大学将秉持“自强不息、厚德载物”的校训和“行胜于言”的校风，坚持“中西融汇、古今贯通、文理渗透”的办学风格和“又红又专、全面发展”的培养特色，弘扬“爱国奉献、追求卓越”传统和“人文日新”精神，以习近平新时代中国特色社会主义思想为指引，深入学习贯彻党的十九大精神，坚持正确方向、坚持立德树人、坚持服务国家、坚持改革创新，持续深入推进综合改革和“双一流”建设，努力在创建世界一流大学方面走在前列，为实现高等教育内涵式发展、建设高等教育强国作出新的更大的贡献。
-          </div>
+          <div class="info-title">{{ navInfo.name }}</div>
+          <div class="content" v-html="contentInfo"></div>
         </div>
       </div>
     </div>
@@ -68,39 +55,90 @@ export default {
           text: '学校介绍',
           active: true
         }
-      ]
+      ],
+      navs: [],
+      fnavInfo: {},
+      sideNavs: [],
+      navInfo: []
     }
   },
-  asyncData({ params, $axios }) {
-    console.log(this)
+  async asyncData({ params, $axios, store }) {
+    let res = await $axios.$post('/api/web/article/articleDetailsByUrl', {
+      url: params.snav
+    })
+    console.log('------')
+    console.log(res)
+    let content =""
+    if(res.data){
+      content = res.data.content
+    }
     return {
       fnav: params.fnav,
-      snav: params.snav
+      snav: params.snav,
+      // contentInfo :res.data.content,
+      contentInfo: content
     }
-  },
-  created() {
-    console.log('列表页使用vuex中nav')
-    console.log(this.$store.state.childrenNav)
-    console.log(this.$store.state.nav)
   },
   //   props: ['fnav', 'snav'],
   // beforeRouteUpdate(to, from, next) {
   //   alert(1)
   // },
-  components: {
-    // Bottom,
-    // PagesHeader
+  mounted() {
+    // this.fnavInfo = this.$store.state.fnav
+    // this.sideNavs = this.$store.state.childrenNav
+    // this.navInfo = this.$store.state.nav
+    // console.log('snav  获取 navs 1')
+    // console.log('m-----------')
+    // this.navs = this.$store.state.navs
+    // console.log(this.navs)
+    // console.log(this.$route.params)
+    // console.log('m-----------')
+    this.renderSiderBar()
+  },
+  watch: {
+    '$store.state.navs': function(val) {
+      // console.log('w-----------')
+      // this.navs = val
+      // console.log(this.navs)
+      // console.log(this.$route.params)
+      // console.log('w-----------')
+      this.renderSiderBar()
+    }
   },
   layout: 'common',
   methods: {
     getdata() {
       alert(this.fnav)
+    },
+    renderSiderBar() {
+      console.log('render')
+      let storeNavs = this.$store.state.navs
+      if (storeNavs.length == 0) {
+        return
+      }
+      let furl = this.$route.params.fnav
+      let surl = this.$route.params.snav
+      let fnavInfo = storeNavs.find(e => e.navUrl == furl)
+      let children = fnavInfo.children
+      let navInfo = children.find(e => e.navUrl == surl)
+      this.fnavInfo = fnavInfo
+      this.sideNavs = children
+      this.navInfo = navInfo
+      // console.log(fnavInfo)
+      // console.log(children)
+      // console.log(navInfo)
+
+      // console.log(storeNavs)
+      // console.log("end render")
+    },
+    passNav(nav) {
+      this.$store.commit('passNav', nav)
     }
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 // 1200以下隐藏左侧 只显示内容区域
 @media screen and (max-width: 1200px) {
   .news-container {
@@ -164,6 +202,7 @@ export default {
   }
   .active {
     color: #e85985 !important;
+    cursor: default;
   }
 }
 
@@ -194,11 +233,19 @@ export default {
   padding: 0 10px;
 }
 
-.content {
-  line-height: 2;
-  padding: 10px;
-  text-align: left;
-  font-size: 18px;
-  margin-bottom: 100px;
+.info {
+  .content {
+    line-height: 2;
+    padding: 10px;
+    text-align: left;
+    font-size: 18px;
+    margin-bottom: 100px;
+    p {
+      text-align: left;
+    }
+    img {
+      text-align: center;
+    }
+  }
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div class="notice-container">
-    <div class="w14">
+    <div class="w14 reveal-bottom">
       <a href="#" class="title-link">
         <div class="notice-title">校内通知<span class="btn-more">>></span></div>
       </a>
       <!-- <div class="notice-title">校内通知<span class="btn-more">>></span></div> -->
       <div class="notice-list">
-        <div class="item reveal-bottom" v-for="i in bgcs" :key="i">
+        <div class="item " v-for="i in bgcs" :key="i">
           <div class="top" v-bind:style="{ background: i }"></div>
           <div class="date">
             <span>20</span>
