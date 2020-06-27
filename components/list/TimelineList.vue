@@ -14,14 +14,15 @@
       </a>
     </div>
     <ul class="line-list">
-      <li class="line-item" v-for="item in items" :key="item">
+      <li class="line-item" v-for="item in items" :key="item.id">
         <div class="time ">
           <i class="arrow "><em></em></i>
           <code class="now"></code>
-          6.20
+          {{ item.createTime | shortDate}}
+          
         </div>
         <div class="title">
-          <a href="#">清华大学档案工作报告会举行</a>
+          <router-link :to="'/news/' + item.id">{{ item.title }}</router-link>
         </div>
       </li>
     </ul>
@@ -29,16 +30,46 @@
 </template>
 
 <script>
-import { BIconNewspaper,BIcon } from 'bootstrap-vue'
+import { BIconNewspaper, BIcon } from 'bootstrap-vue'
+import moment from 'moment'
 export default {
   data() {
     return {
-      items: [1, 2, 3, 4, 5]
+      items: []
     }
   },
   components: {
     BIconNewspaper,
     BIcon
+  },
+  async mounted() {
+    var timeLine = this.$store.state.timeLine
+
+    console.log('----Timeline---')
+    console.log(this.$store.state.timeLine)
+    console.log('----Timeline---')
+    // console.log(hotList.length)
+    if (timeLine.length == 0) {
+      let res = await this.$axios.post('/api/web/article/articleListByUrl', {
+        url: 'newslist',
+        orderType: 0,
+        pageNumber: 1,
+        pageSize: 5
+      })
+
+      timeLine = res.data.data.records
+      // this.$store.commit('storeNavs', this.navs)
+      this.$store.commit('setTimeLine', timeLine)
+      console.log(this.$store.state.timeLine)
+      console.log('t-请求数据-')
+    }
+    this.items = timeLine
+    console.log(this.items)
+  },
+  filters: {
+    shortDate: function(value) {
+      return moment(value).format('MM-DD')
+    }
   }
 }
 </script>

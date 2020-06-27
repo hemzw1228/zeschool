@@ -3,8 +3,7 @@
     <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
       <div class="l">
-        {{ type }}
-        <CommonList :nlist="newsList"></CommonList>
+        <CommonList  :type="$route.params.type" :title="typeTitle"></CommonList>
       </div>
       <div class="r">
         <HotList></HotList>
@@ -30,23 +29,24 @@ export default {
     return true
   },
   mounted() {
-    this.$myInjectedFunction('dfdfafda')
+    // this.$myInjectedFunction('dfdfafda')
+    this.getTitle()
   },
   data() {
-    return {}
+    return { typeTitle: '' }
   },
   async asyncData({ params, $axios, query, app }) {
-    let data = {
-      pageNumber: 1,
-      pageSize: 10,
-      url: params.type
-    }
+    // let data = {
+    //   pageNumber: 1,
+    //   pageSize: 10,
+    //   url: params.type
+    // }
 
-    console.log(data)
-    let res = await $axios.$post('/api/web/article/articleDetailsByUrl', data)
-    console.log('--------')
-    console.log(res.data.records)
-    return { newsList: res.data.records }
+    // console.log(data)
+    // let res = await $axios.$post('/api/web/article/articleDetailsByUrl', data)
+    // console.log('--------')
+    // console.log(res.data.records)
+    // return { newsList: res.data.records }
   },
   // async asyncData({ params, $axios, query, error }) {
   //   // let res = await $axios.$post(
@@ -96,7 +96,7 @@ export default {
   props: ['type'],
   components: {
     HotList,
-    CommonList,
+    CommonList
     // Bottom,
     // PagesHeader
   },
@@ -118,18 +118,40 @@ export default {
   //   )
   //   console.log(res.data)
   //   next()
-  // }
+  // },
+  watch: {
+    '$store.state.navs': function(val) {
+      // console.log('w-----------')
+      // this.navs = val
+      // console.log(this.navs)
+      // console.log(this.$route.params)
+      // console.log('w-----------')
+      this.getTitle()
+    }
+  },
+  methods: {
+    getTitle() {
+      let navs = this.$store.state.navs
+      if (navs.length == 0) {
+        return
+      }
+      // console.log(navs)
+      let fnav = navs.find(e => e.navUrl == 'newslist')
+      // console.log(fnav)
+      let navInfo = fnav.children.find(e => e.navUrl == this.$route.params.type)
+      this.typeTitle = navInfo.name
+    }
+  },
   middleware: 'test',
-  layout:'common'
+  layout: 'common'
 }
 </script>
 
 <style lang="less" scoped>
-@media screen and (max-width:1400px) {
-  .news-container{
-    width: 100%!important;
+@media screen and (max-width: 1400px) {
+  .news-container {
+    width: 100% !important;
   }
-  
 }
 @media screen and (max-width: 1000px) {
   .r {

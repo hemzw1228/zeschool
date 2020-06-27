@@ -1,41 +1,66 @@
 <template>
   <div class="list-wrapper">
     <div class="top-title">
-      <span><b-icon-newspaper ></b-icon-newspaper></span>
+      <span><b-icon-newspaper></b-icon-newspaper></span>
       近期热点
     </div>
     <ul class="news-list">
       <li
         class="list-item"
         v-for="item in items"
-        :key="item"
+        :key="item.id"
         style="text-align:left"
       >
         <div class="item-info" style="text-align:left">
           <span class="item-date">
-            <b-icon-clock  class="clock-icon"></b-icon-clock>2020.06.20</span
+            <b-icon-clock class="clock-icon"></b-icon-clock>{{item.createTime|shortDate}}</span
           >
-          <span><b-icon-eye class="eye-icon"></b-icon-eye>999</span>
+          <span><b-icon-eye class="eye-icon"></b-icon-eye>{{item.lookCount}}</span>
         </div>
         <div class="item-title" style="text-align:left">
-          <a href="#">过勇赴浙江访问并看望慰问校友</a>
+          <router-link :to="'/news/'+item.id">{{item.title}}</router-link>
         </div>
       </li>
     </ul>
   </div>
 </template>
 <script>
-import { BIconNewspaper,BIconEye,BIconClock } from 'bootstrap-vue'
+import { BIconNewspaper, BIconEye, BIconClock } from 'bootstrap-vue'
+import moment from 'moment'
 export default {
   data() {
     return {
-      items: [1, 2, 3, 4, 5]
+      items:[]
     }
   },
   components: {
     BIconNewspaper,
     BIconEye,
     BIconClock
+  },
+  async mounted() {
+    var hotList = this.$store.state.hotList
+    console.log('----hotlist---')
+    // console.log(hotList.length)
+    if (hotList.length == 0) {
+      let res = await this.$axios.post('/api/web/article/articleListByUrl', {
+        url: 'newslist',
+        orderType: 1,
+        pageNumber: 1,
+        pageSize: 5
+      })
+
+      hotList = res.data.data.records
+      this.$store.state.hotList = hotList
+      console.log("请求数据")
+    }
+    this.items = hotList
+    console.log(this.items)
+  },
+  filters: {
+    shortDate: function(value) {
+      return moment(value).format('YYYY-MM-DD')
+    }
   }
 }
 </script>

@@ -22,7 +22,7 @@
       <b-navbar-toggle target="sidebar-1" v-b-toggle.sidebar-1></b-navbar-toggle>
       <ul class="mzw-nav d-none  d-md-flex   ">
         <li v-for="nav in navs" :key="nav.id">
-          <router-link :to="'/' + nav.navUrl">{{ nav.name }}</router-link>
+          <router-link :to="getToUrl(nav)">{{ nav.name }}</router-link>
           <ul class=" mw-subnav">
             <li v-for="item in nav.children" :key="item.id">
               <router-link :to="{path:'/'+nav.navUrl+'/'+item.navUrl,query: { id: item.id}}">{{item.name}}</router-link>
@@ -79,6 +79,18 @@ export default {
     },
     handleSearch() {
       this.$emit('popSearch', true)
+    },
+    getToUrl(nav) {
+      // 渲染一级导航的url
+      // 有子导航的直接渲染为第一个孩子的url
+      // 否则为内容一级导航内容页
+      let a = '/' + nav.navUrl
+      if (nav.children[0]) {
+        // console.log("1111")
+        // console.log((nav.children[0]).navUrl)
+        a = a + '/' + nav.children[0].navUrl
+      }
+      return a
     }
   }
 }

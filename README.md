@@ -1,5 +1,5 @@
-
 ### 接口
+
 - url:http://47.105.223.27:8081
 - 导航 /web/navbar/category
 ```json
@@ -31,22 +31,8 @@
                     "navUrl": "xxjj",
                     "parent": null,
                     "children": null
-                },
-                {
-                    "id": 16,
-                    "createTime": null,
-                    "updateTime": null,
-                    "pid": 8,
-                    "name": "现任领导",
-                    "description": "二级分类",
-                    "sort": null,
-                    "status": 1,
-                    "icon": null,
-                    "navType": 2,
-                    "navUrl": "ld",
-                    "parent": null,
-                    "children": null
                 }
+  
             ]
         },
 ```
@@ -60,6 +46,8 @@
 	"pageSize":10,
 	"id":21}
 ```
+
+
 - 文章点击数量 /web/article/articleOrderByCount
 ```
  {
@@ -73,6 +61,57 @@
  参数  id（tagid）   pageNumber pageSize  orderType;//0:时间，1：浏览次数
 ```
 
+```json
+{
+    "status": "0000",
+    "msg": "处理成功",
+    "data": {
+        "records": [
+            {
+                "id": 26,
+                "createTime": "2020-06-26 21:29:09",
+                "updateTime": null,
+                "title": "南京日报：冯骥才眼中的文艺大家",
+                "userId": "1",
+                "author": "码上无忧",
+                "coverImage": null,
+                "qrcodePath": null,
+                "isMarkdown": null,
+                "content": null,
+                "contentMd": null,
+                "top": 1,
+                "categoryId": null,
+                "status": null,
+                "recommended": 0,
+                "slider": 0,
+                "sliderImg": "",
+                "original": 1,
+                "description": "http://www.tju.edu.cn/info/1182/3171.htm",
+                "keywords": null,
+                "comment": null,
+                "lookCount": 2,
+                "commentCount": 0,
+                "loveCount": 0,
+                "newFlag": 0,
+                "bizCategory": null
+            }
+        ],
+        "total": 4,
+        "size": 1,
+        "current": 1,
+        "orders": [],
+        "pages": 4,
+        "prePage": 0,
+        "nextPage": 2,
+        "hasPreviousPage": false,
+        "hasNextPage": true,
+        "firstPage": true,
+        "lastPage": false,
+        "searchCount": true
+    }
+}
+```
+
 
 
 - 文章详情 /web/article/articleDetails
@@ -84,12 +123,32 @@
   - 神奇的接口，根据url即能获取**二级导航内容**又能获取**新闻列表**
 
   ```
-   参数url   pageNumber pageSize 
+  参数url   pageNumber pageSize 
    or
+   
+  ```
+
+- 获取所有newslist 的新闻（**时间排序或点击量排序**）
+
+  - /web/article/articleListByUrl
+
+  ```json
+  {
+      "url":"newslist",
+      "orderType":0--时间|1--浏览次数
+      。。。分页参数
+  }
+  ```
+
+- 标题查询接口 /web/article/articleQryByTitle
+
+  ```json
+  {
+      "keywords":"adfasdf"
+  }
   ```
 
   
-
 - 轮播 /web/article/articleBySlider 
 ```
   {
@@ -162,27 +221,6 @@
             "updateTime": "2020-06-26 21:51:23",
             "name": "轮播图",
             "description": "轮播图文章"
-        },
-        {
-            "id": 8,
-            "createTime": "2019-09-14 15:30:48",
-            "updateTime": "2019-09-14 15:30:48",
-            "name": "工具",
-            "description": "工具"
-        },
-        {
-            "id": 9,
-            "createTime": "2019-09-14 15:30:56",
-            "updateTime": "2019-09-14 15:30:56",
-            "name": "资源",
-            "description": "资源"
-        },
-        {
-            "id": 10,
-            "createTime": "2019-09-14 15:31:36",
-            "updateTime": "2019-09-14 15:31:36",
-            "name": "JavaScript",
-            "description": "JavaScript"
         }
     ]
 }
@@ -192,43 +230,66 @@
 
 ### 首页数据渲染
 
-- layout ---> default
-- 轮播图---（轮播标签 "id": 7）
-- 两块要闻大图--（标签id:6）
-- 8块要闻标题（标签id:1）
-- 4块通知（标签id:2）
-- 校园人文（标签id:3）
-- 校园活动（标签id:4）
-- 专题专栏（标签id:5）
+- [ ] layout ---> default
+- [ ] navbar 路由跳转
+- [ ] 轮播图---（轮播标签 "id": 7）
+- [ ] 两块要闻大图--（标签id:6）
+- [ ] 8块要闻标题（标签id:1）
+- [ ] 4块通知（标签id:2）
+- [ ] 校园人文（标签id:3）
+- [ ] 校园活动（标签id:4）
+- [ ] 专题专栏（标签id:5）
 
 
 
 ### 二级导航页面
 
-- 导航内容（接口 /web/article/articleDetailsByUrl  ）
-- 侧边栏导航信息 （vuex 存储在 **this.$store.state.childrenNav**）
-    - 首次进入页面可this.$store.childrenNav为空
-    - 在页面监听 this.$store.navs 更新侧边栏信息
-- 直接进入需要判断 ：fanv 和 snav
+- 导航内容（接口 /web/article/articleDetailsByUrl)
+
+- [x] 侧边栏导航信息 
+
+    - 在common layout 的mounted 中 存储  **this.$store.state.navs**
+
+    - 因为**mounted 触发时异步执行** 首次进入页面可this.$store.navs为空
+    - 在挂载（mounted）页面时渲染侧边栏信息并且 监听（watch） this.$store.navs 更新侧边栏信息
+
+- [x] 直接进入需要判断 ：fanv 和 snav
+
+    - fnav 直接进入第一个子页面
+
+- [ ] 封面图
+- [x] 面包屑
 
 ### 新闻列表页
 
 - url (newslist/:type)
-- 通过type 利用 接口（/web/article/articleDetailsByUrl ）获取新闻列表
-- 通过newslist 获取点击量最高的新闻列表
+- [ ] 通过type 利用 接口（/web/article/articleDetailsByUrl ）获取新闻列表
+- [ ] 新闻标题
+- [x] 通过newslist 获取点击量最高的新闻列表
 
 ### 新闻内容页面
 
 - url(/news/id)
-- 通过id获取新闻信息（内容）
-- 通过newslist url 获取 最新新闻列表
-- 通过categoryId 获取相关新闻列表
+
+- [ ] 通过id获取新闻信息（内容）
+- [ ] 通过newslist url 获取 最新新闻列表
+- [ ] 通过categoryId 获取相关新闻列表
+
+### 搜索页面
+
+### 404 页面
+
+### 
+
+
 
 ### 其他页面数据渲染
 
 - layout --->common 
 - 在 common 获取 header 和 bottom 的数据
-- 在common 中获取 navs 存储在 this.$store.state.navs
+- [x] 在common 中获取 navs 存储在 this.$store.state.navs
+
+- [ ] 底部链接 和 版权信息
 
 ### 导航条路由解决思路
 
@@ -236,7 +297,7 @@
 
 - /:fnav/ --->一级导航内容页     
 - /:fnav/:snav --->二级导航内容页
-- /newslist/:type？id --->新闻列表
+- /newslist/:type?tagid --->新闻列表
   - type 二级路由的url
   - 利用 id 页
   - 根据newslist 获取侧边栏点击量最高新闻列表

@@ -45,15 +45,7 @@ export default {
       items: [
         {
           text: '首页',
-          href: '#'
-        },
-        {
-          text: '学校情况',
-          href: '#'
-        },
-        {
-          text: '学校介绍',
-          active: true
+          href: '/'
         }
       ],
       navs: [],
@@ -63,6 +55,7 @@ export default {
     }
   },
   async asyncData({ params, $axios, store }) {
+    // 获取文章信息
     let res = await $axios.$post('/api/web/article/articleDetailsByUrl', {
       url: params.snav
     })
@@ -111,6 +104,7 @@ export default {
       alert(this.fnav)
     },
     renderSiderBar() {
+      // 页面内导航信息、
       console.log('render')
       let storeNavs = this.$store.state.navs
       if (storeNavs.length == 0) {
@@ -118,18 +112,24 @@ export default {
       }
       let furl = this.$route.params.fnav
       let surl = this.$route.params.snav
+      // 父级nav
       let fnavInfo = storeNavs.find(e => e.navUrl == furl)
+      // 所有子导航
       let children = fnavInfo.children
+      // 当前nav
       let navInfo = children.find(e => e.navUrl == surl)
       this.fnavInfo = fnavInfo
       this.sideNavs = children
       this.navInfo = navInfo
-      // console.log(fnavInfo)
-      // console.log(children)
-      // console.log(navInfo)
-
-      // console.log(storeNavs)
-      // console.log("end render")
+      // 渲染面包屑
+      this.items.push({
+        text:fnavInfo.name,
+        url:"/"+fnavInfo.navUrl
+      })
+      this.items.push({
+        text:navInfo.name,
+        active:true
+      })
     },
     passNav(nav) {
       this.$store.commit('passNav', nav)
@@ -205,6 +205,7 @@ export default {
     cursor: default;
   }
 }
+
 
 // 内容栏
 .mcurmb {

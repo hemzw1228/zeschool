@@ -9,6 +9,8 @@ const store = () =>
       nav: {},
       childrenNav: [],
       fnav: [],
+      hotList:[],
+      timeLine:[]
     },
     mutations: {
       storeNavs(state, navs) {
@@ -22,6 +24,9 @@ const store = () =>
       },
       passFnav(state, fnav) {
         state.fnav = fnav
+      },
+      setTimeLine(state,timeLine){
+        state.timeLine = timeLine
       }
     }
   })

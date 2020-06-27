@@ -1,18 +1,18 @@
 <template>
   <div class="list-wrapper">
-    <div class="list-title">综合新闻</div>
+    <div class="list-title">{{ title }}</div>
     <ul class="news-list">
-      <li class="list-item" v-for="i in nlist" :key="i.id">
+      <li class="list-item" v-for="i in items" :key="i.id">
         <span class="date-box">2020-06-20</span>
         <div class="news-title">
-          <nuxt-link :to="'/news/'+i.id">{{ i.title }}</nuxt-link>
+          <nuxt-link :to="'/news/' + i.id">{{ i.title }}</nuxt-link>
         </div>
       </li>
     </ul>
     <b-pagination
       @change="getP"
       v-model="currentPage"
-      :total-rows="rows"
+      :total-rows="total"
       :per-page="perPage"
       aria-controls="my-table"
     ></b-pagination>
@@ -23,12 +23,13 @@
 export default {
   data() {
     return {
-      perPage: 3,
+      perPage: 10,
       currentPage: 1,
-      items: [1, 2, 3, 4, 5]
+      items: [],
+      total:0
     }
   },
-  props: ['nlist'],
+  props: ['title', 'type'],
   computed: {
     rows() {
       return 100
@@ -36,11 +37,30 @@ export default {
   },
   methods: {
     getP(a) {
-      alert(a)
+      this.currentPage = a
+      this.getNewsList()
+    },
+    async getNewsList() {
+      let data = {
+        pageNumber: this.currentPage,
+        pageSize: this.perPage,
+        url: this.type
+      }
+      let res = await this.$axios.post(
+        '/api/web/article/articleDetailsByUrl',
+        data
+      )
+      console.log('-----getList---')
+      console.log(res.data.data)
+      this.total = res.data.data.total
+      this.items =  res.data.data.records
     }
   },
   mounted() {
-    console.log(this.nlist)
+    // console.log(this.nlist)
+    console.log('----type-----')
+    console.log(this.type)
+    this.getNewsList()
   }
 }
 </script>
