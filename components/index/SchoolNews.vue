@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="school-container">
-      <div class="w14">
+      <div class="w14" >
         <!-- 校园人文 -->
         <div class="cul-container">
           <div class="cul-pic">
@@ -11,59 +11,52 @@
             />
           </div>
           <div class="cul-title">
-            <a href="#" class="title-link">
-              <div class="t-title reveal-left" >
+            <a href="/newslist/xysh" class="title-link">
+              <div class="t-title reveal-left">
                 校园文化<span class="btn-more">>></span>
               </div>
             </a>
           </div>
-          <div class="cul-desc">
+          <div class="cul-desc"  v-if="isOk">
             <div class="desc-img">
-              <img
-                src="https://www.pku.edu.cn/dat/img/7f6b6697a8af4bdab0dc6221201a3c5c.jpg"
-                alt=""
-              />
+              <img :src="topArticle.coverImage" alt="" />
             </div>
             <div class="desc-content">
               <div class="desc-title">
-                <a href="#"
-                  >环境科学与工程学院陈忠明课题组发现大气颗粒物过氧化氢更重要来源</a
-                >
+                <router-link :to="'/news/' + topArticle.id">{{
+                  topArticle.title
+                }}</router-link>
               </div>
-              <div class="desc-text">
-                多相分配是大气氧化剂循环和颗粒物增长的重要途径，本文从大气过氧化物视角的新发现，有助于揭示大气细颗粒物生成和演变的新途径，有助于理解重霾污染天气下细颗粒物爆发式增长机理，为提高大气环境质量，遏制重污染事件发生的频率提供科技支撑。
-              </div>
+              <div class="desc-text">{{ topArticle.description }}...</div>
             </div>
           </div>
         </div>
         <!-- 校园活动专题 -->
-        <b-row align-h="center" class="spec-list">
-          <b-col order="2" cols="12" lg="6" class="spec-item reveal-left">
-            <a href="#" class="img-a ">
+        <b-row align-h="center" class="spec-list ">
+          <b-col order="2" cols="12" lg="6" class="spec-item reveal-left" >
+            <router-link :to="'/news/' + imgList[0].id" class="img-a " v-if="isOk" >
               <b-img
                 fluid-grow
-                src="https://www.tsinghua.edu.cn/images/intothu-2_03.jpg"
+                :src="imgList[0].coverImage"
+                class="reveal-left"
               ></b-img>
-              <span class="img-title">习近平总书记视察南开大学</span>
-            </a>
+              <span class="img-title">{{ imgList[0].title }}</span>
+            </router-link>
           </b-col>
           <!-- 小屏首位 -->
-          <b-col order="1" order-lg="3" cols="12" lg="6" class="spec-item ">
-            <b-row no-gutters class="spec-item-right  reveal-right">
-              <div class="spec-title">
-                <a href="#" class="title-link">
+          <b-col order="1" order-lg="3" cols="12" lg="6" class="spec-item  ">
+            <b-row no-gutters class="spec-item-right reveal-right "  >
+              <div class="spec-title" >
+                <a href="/newslist/xysh" class="title-link">
                   <div class="t-title">
                     校园活动<span class="btn-more">>></span>
                   </div>
                 </a>
               </div>
-              <a href="#" class="img-a">
-                <b-img
-                  fluid-grow
-                  src="https://www.tsinghua.edu.cn/images/pic4.jpg"
-                ></b-img>
-                <span class="img-title">习近平总书记视察南开大学</span>
-              </a>
+              <router-link :to="'/news/' + imgList[1].id" class="img-a " v-if="isOk">
+                <b-img fluid-grow :src="imgList[1].coverImage"></b-img>
+                <span class="img-title">{{ imgList[1].title }}</span>
+              </router-link>
             </b-row>
           </b-col>
         </b-row>
@@ -77,51 +70,114 @@ export default {
   data() {
     return {
       // scrollReveal:scrollReveal()
+
+      topImgUrl: '',
+      topArticle: {},
+      imgList: [],
+      isOk:false
     }
   },
+  created() {},
   mounted() {
-    if (process.client) {
-      // var s = require('scrollreveal')
-     var s = require('scrollreveal')
-     var scrollReveal = s.default()
-      // console.log(s)
-      scrollReveal.reveal('.reveal-left', {
-        // 动画的时长
-        duration: 1000,
-        // 延迟时间
-        delay: 200,
-        // 动画开始的位置，'bottom', 'left', 'top', 'right'
-        origin: 'left',
-        // 回滚的时候是否再次触发动画
-        reset: false,
-        // 在移动端是否使用动画
-        mobile: false,
-        // 滚动的距离，单位可以用%，rem等
-        distance: '500px',
-        // 其他可用的动画效果
-        opacity: 0.05,
-        easing: 'ease-in-out',
-        scale: 1
+    this.getTopImg()
+    this.getTopArticle()
+    this.getImgList()
+  },
+  watch: {
+    imgList(val) {
+      console.log('----------watch---------')
+      if (val.length == 2) {
+        this.isOk = true
+        this.addAction()
+        console.log(this.isOk)
+      }
+      console.log('---------watchend---------')
+    }
+  },
+  methods: {
+    addAction() {
+      if (process.client) {
+        var s = require('scrollreveal')
+        var scrollReveal = s.default()
+        // console.log(s)
+        scrollReveal.reveal('.reveal-left', {
+          // 动画的时长
+          duration: 1000,
+          // 延迟时间
+          delay: 200,
+          // 动画开始的位置，'bottom', 'left', 'top', 'right'
+          origin: 'left',
+          // 回滚的时候是否再次触发动画
+          reset: false,
+          // 在移动端是否使用动画
+          mobile: false,
+          // 滚动的距离，单位可以用%，rem等
+          distance: '500px',
+          // 其他可用的动画效果
+          opacity: 0.05,
+          easing: 'ease-in-out',
+          scale: 1
+        })
+        scrollReveal.reveal('.reveal-right', {
+          // 动画的时长
+          duration: 1000,
+          // 延迟时间
+          delay: 200,
+          // 动画开始的位置，'bottom', 'left', 'top', 'right'
+          origin: 'right',
+          // 回滚的时候是否再次触发动画
+          reset: false,
+          // 在移动端是否使用动画
+          mobile: false,
+          // 滚动的距离，单位可以用%，rem等
+          distance: '500px',
+          // 其他可用的动画效果
+          opacity: 0.05,
+          easing: 'ease-in-out',
+          scale: 1
+        })
+
+        console.log('-------addaction-----------scholl')
+      }
+    },
+    async getTopImg() {
+      // let res = await this.$axios.post('/api/web/article/articleByTagId', {
+      //   id
+      // })
+      // if (res.data.status == '9999') {
+      //   return
+      // }
+      // this.topImgUrl = res.data.data
+    },
+    async getTopArticle() {
+      let res = await this.$axios.post('/api/web/article/articleByTagId', {
+        id: 3,
+        pageSize: 1,
+        pageNumber: 1,
+        orderType: 1
       })
-      scrollReveal.reveal('.reveal-right', {
-        // 动画的时长
-        duration: 1000,
-        // 延迟时间
-        delay: 200,
-        // 动画开始的位置，'bottom', 'left', 'top', 'right'
-        origin: 'right',
-        // 回滚的时候是否再次触发动画
-        reset: false,
-        // 在移动端是否使用动画
-        mobile: false,
-        // 滚动的距离，单位可以用%，rem等
-        distance: '500px',
-        // 其他可用的动画效果
-        opacity: 0.05,
-        easing: 'ease-in-out',
-        scale: 1
+      if (res.data.status == '9999') {
+        return
+      }
+      this.topArticle = res.data.data.records[0]
+      console.log('toparticle-----')
+      console.log(res.data)
+      console.log('toparticle-----end')
+    },
+    async getImgList() {
+      let res = await this.$axios.post('/api/web/article/articleByTagId', {
+        id: 4,
+        pageSize: 2,
+        pageNumber: 1,
+        orderType: 1
       })
-      // scrollReveal.clean('.t-title');
+      if (res.data.status == '9999') {
+        return
+      }
+      this.imgList = res.data.data.records
+      console.log('imgList-----')
+      console.log(res.data)
+      console.log('imgList-----end')
     }
   }
 }
@@ -169,9 +225,9 @@ export default {
   }
   //文化图片
   .cul-pic {
+    height: 180px !important;
     img {
       width: 100%;
-      height: 180px !important;
     }
   }
   .school-container {
@@ -204,9 +260,9 @@ export default {
     }
   }
   .cul-pic {
+    height: 150px !important;
     img {
       width: 100%;
-      height: 150px !important;
     }
   }
 
@@ -246,7 +302,7 @@ export default {
 .cul-title {
   padding: 40px;
   font-size: 28px;
-  
+
   .t-title {
     font-size: 28px;
     color: #333;
@@ -275,9 +331,10 @@ export default {
 }
 
 .cul-pic {
+  height: 250px;
   img {
     width: 100%;
-    height: 250px;
+    height: 100%;
   }
 }
 
@@ -293,9 +350,13 @@ export default {
   right: 50px;
   .desc-img {
     margin-right: 20px;
+    // width: 300px;
+    flex: 0 0 150px;
     img {
-      max-width: 100%;
-      max-height: 100%;
+      // max-width: 100%;
+      // max-height: 100%;
+      height: 100%;
+      width: 100%;
     }
   }
 

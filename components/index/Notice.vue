@@ -1,24 +1,20 @@
 <template>
   <div class="notice-container">
     <div class="w14 reveal-bottom">
-      <a href="#" class="title-link">
+      <router-link to="/newslist/xntz" class="title-link">
         <div class="notice-title">校内通知<span class="btn-more">>></span></div>
-      </a>
+      </router-link>
       <!-- <div class="notice-title">校内通知<span class="btn-more">>></span></div> -->
-      <div class="notice-list">
-        <div class="item " v-for="i in bgcs" :key="i">
-          <div class="top" v-bind:style="{ background: i }"></div>
+      <div class="notice-list " >
+        <div class="item " v-for="(notice, index) in notices" :key="notice.id">
+          <div class="top" v-bind:style="{ background: bgcs[index] }"></div>
           <div class="date">
-            <span>20</span>
-            2020-6
+            <span>{{ notice.createTime | dateDay }}</span>
+            {{ notice.createTime | dateYM }}
           </div>
           <div class="msg-body">
-            <a class="b-title" href="#"
-              >162020.06 解放军报：颜晓峰：人民安全是国家安全的基石</a
-            >
-            <span class="b-msg"
-              >本文作者系天津大学马克思主义学院院长颜晓峰本文作者系天津大学马克思主义学院院长颜晓峰本文作者系天津大学马克思主义学院院长颜晓峰</span
-            >
+            <a class="b-title" href="#">{{ notice.title.slice(0,20) }}{{notice.title.length>20?"...":""}}</a>
+            <span class="b-msg">{{ notice.description.slice(0, 20) }}...</span>
           </div>
         </div>
       </div>
@@ -27,23 +23,25 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   data() {
     return {
-      bgcs: ['#00afa2', '#34bee4', '#750c0c', '#66a7d3']
+      bgcs: ['#00afa2', '#34bee4', '#750c0c', '#66a7d3'],
+      notices: []
     }
   },
-  mounted(){
-     if (process.client) {
+  mounted() {
+    if (process.client) {
       // var s = require('scrollreveal')
-     var s = require('scrollreveal')
-     var scrollReveal = s.default()
+      var s = require('scrollreveal')
+      var scrollReveal = s.default()
       // console.log(s)
       scrollReveal.reveal('.reveal-bottom', {
         // 动画的时长
-        duration:800,
+        duration: 800,
         // 延迟时间
-        delay: 200,
+        delay: 100,
         // 动画开始的位置，'bottom', 'left', 'top', 'right'
         origin: 'bottom',
         // 回滚的时候是否再次触发动画
@@ -57,6 +55,30 @@ export default {
         easing: 'ease-in-out',
         scale: 1
       })
+    }
+    this.getNotices()
+  },
+  methods: {
+    async getNotices() {
+      // tagid:2  校内通知
+      let res = await this.$axios.post('/api/web/article/articleByTagId', {
+        pageNumber: 1,
+        pageSize: 4,
+        id: 2,
+        orderType: 1
+      })
+      if (res.data.status == '9999') {
+        return
+      }
+      this.notices = res.data.data.records
+    }
+  },
+  filters: {
+    dateDay(val) {
+      return moment(val).format('DD')
+    },
+    dateYM(val) {
+      return moment(val).format('YYYY-MM')
     }
   }
 }
@@ -176,13 +198,15 @@ export default {
     .msg-body {
       height: 85px;
       padding: 40px 20px;
+      // padding-top:40px;
       box-sizing: content-box;
       background-color: #fff;
       overflow: hidden;
       .b-title {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+        font-weight: 700;
       }
       a {
         text-decoration: none;
@@ -197,6 +221,7 @@ export default {
       .b-msg {
         // padding: 20px;
         // overflow: hidden;
+        text-align: left;
       }
     }
   }

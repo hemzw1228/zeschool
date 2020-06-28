@@ -135,7 +135,7 @@
   ```json
   {
       "url":"newslist",
-      "orderType":0--时间|1--浏览次数
+      "orderType":1--时间|0--浏览次数
       。。。分页参数
   }
   ```
@@ -148,7 +148,6 @@
   }
   ```
 
-  
 - 轮播 /web/article/articleBySlider 
 ```
   {
@@ -263,16 +262,16 @@
 ### 新闻列表页
 
 - url (newslist/:type)
-- [ ] 通过type 利用 接口（/web/article/articleDetailsByUrl ）获取新闻列表
-- [ ] 新闻标题
+- [x] 通过type 利用 接口（/web/article/articleDetailsByUrl ）获取新闻列表
+- [x] 新闻标题
 - [x] 通过newslist 获取点击量最高的新闻列表
 
 ### 新闻内容页面
 
 - url(/news/id)
 
-- [ ] 通过id获取新闻信息（内容）
-- [ ] 通过newslist url 获取 最新新闻列表
+- [x] 通过id获取新闻信息（内容）
+- [x] 通过newslist url 获取 最新新闻列表
 - [ ] 通过categoryId 获取相关新闻列表
 
 ### 搜索页面
@@ -294,6 +293,8 @@
 ### 导航条路由解决思路
 
 **路由**
+
+- / --->首页***
 
 - /:fnav/ --->一级导航内容页     
 - /:fnav/:snav --->二级导航内容页

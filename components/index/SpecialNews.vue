@@ -3,53 +3,63 @@
     <div class="w14 reveal-vis">
       <div class="news-title">校园.要闻</div>
       <!-- 要闻1 -->
-      <div class="row-list row1">
-        <div class="row-img row1-1">
+      <div
+        class="row-list row1"
+        
+      >
+        <div class="row-img row1-1 " v-if="titleList.length != 0 && coverNews.length != 0">
           <div class="inner">
-            <a href="#">
+            <router-link :to="'/news/' + coverNews[0].id">
               <div
                 class="pic"
-                style="background-image:url(https://www.pku.edu.cn/dat/img/23c8e400d3b34cd0b0e07649e45a1cb4.jpeg);"
+                :style="
+                  'background-image:url(' + coverNews[0].coverImage + ');'
+                "
               ></div>
-              <span class="specal-img-title">习近平总书记视察南开大学</span>
-            </a>
+              <span class="specal-img-title">{{ coverNews[0].title }}</span>
+            </router-link>
           </div>
         </div>
         <div class="row-news row1-2">
-          <div class="news-item" v-for="i in 4" :key="i">
-            <a href="#">
-              <div class="title">北京大学党委召开第五轮巡察动员培训会</div>
-            </a>
+          <div class="news-item" v-for="i in titleList.slice(0, 4)" :key="i.id">
+            <router-link :to="'/news/' + i.id">
+              <div class="title">{{ i.title }}</div>
+            </router-link>
           </div>
         </div>
       </div>
-      <div class="row-list row2">
+      <div
+        class="row-list row2"
+        v-if="titleList.length != 0 && coverNews.length != 0"
+      >
         <div class="row-img row2-1">
           <div class="inner">
-            <a href="#">
+            <router-link :to="'/news/' + coverNews[1].id">
               <div
                 class="pic"
-                style="background-image:url(https://www.pku.edu.cn/dat/img/23c8e400d3b34cd0b0e07649e45a1cb4.jpeg);"
+                :style="
+                  'background-image:url(' + coverNews[1].coverImage + ');'
+                "
               ></div>
-              <span class="specal-img-title">习近平总书记视察南开大学</span>
-            </a>
+              <span class="specal-img-title">{{ coverNews[1].title }}</span>
+            </router-link>
           </div>
         </div>
         <div class="row-news row2-2">
-          <div class="news-item" v-for="i in 4" :key="i">
-            <a href="#">
-              <div class="title">北京大学党委召开第五轮巡察动员培训会</div>
-            </a>
+          <div class="news-item" v-for="i in titleList.slice(4, 8)" :key="i.id">
+            <router-link :to="'/news/' + i.id">
+              <div class="title">{{ i.title }}</div>
+            </router-link>
           </div>
         </div>
       </div>
       <!-- 按钮 未完成 -->
       <div class="read-more">
-        <a href="#" target="_blank"
+        <router-link to="/newslist/xnyw" target="_blank"
           ><span class="more-txt"
             >查看更多<span class="iconfont icon-more-line more-icon"></span
           ></span>
-        </a>
+        </router-link>
       </div>
     </div>
     <!-- 标题  未完成 -->
@@ -57,34 +67,92 @@
 </template>
 
 <script>
+import { duration } from 'moment'
 export default {
-  data(){
-    return {}
+  data() {
+    return {
+      titleList: [],
+      coverNews: [],
+      resCount: 0
+    }
   },
-  mounted(){
-    if (process.client) {
-      // var s = require('scrollreveal')
-     var s = require('scrollreveal')
-     var scrollReveal = s.default()
-      // console.log(s)
-      scrollReveal.reveal('.reveal-vis', {
-        // 动画的时长
-        duration: 1000,
-        // 延迟时间
-        delay: 100,
-        // 动画开始的位置，'bottom', 'left', 'top', 'right'
-        origin: 'left',
-        // 回滚的时候是否再次触发动画
-        reset: false,
-        // 在移动端是否使用动画
-        mobile: false,
-        // 滚动的距离，单位可以用%，rem等
-        distance: '200px',
-        // 其他可用的动画效果
-        // opacity: 0.1,
-        easing: 'ease',
-        scale: 1
+  mounted() {
+    this.getCoverNews()
+    this.getTitleList()
+  },
+  watch: {
+    titleList: function(val) {
+      if (val.length != 0) {
+        this.resCount += 1
+      }
+    },
+    coverNews: function(val) {
+      if (val.length != 0) {
+        this.resCount += 1
+      }
+    },
+    resCount: function(val) {
+      // 请求状态完毕
+      if (val == 2) {
+        this.addAction()
+      }
+    }
+  },
+  methods: {
+    async getTitleList() {
+      // tagid:1  要闻标签(title)
+      let res = await this.$axios.post('/api/web/article/articleByTagId', {
+        pageNumber: 1,
+        pageSize: 8,
+        id: 1,
+        orderType: 0
       })
+      if (res.data.status == '9999') {
+        return
+      }
+
+      this.titleList = res.data.data.records
+      console.log(this.titleList)
+    },
+    async getCoverNews() {
+      // tagid:6  要闻大图
+      let res = await this.$axios.post('/api/web/article/articleByTagId', {
+        pageNumber: 1,
+        pageSize: 2,
+        id: 6,
+        orderType: 0
+      })
+      if (res.data.status == '9999') {
+        return
+      }
+      this.coverNews = res.data.data.records
+      console.log(this.coverNews)
+    },
+    addAction() {
+      if (process.client) {
+        // var s = require('scrollreveal')
+        var s = require('scrollreveal')
+        var scrollReveal = s.default()
+        // console.log(s)
+        scrollReveal.reveal('.reveal-vis', {
+          // 动画的时长
+          duration: 1000,
+          // 延迟时间
+          delay: 100,
+          // 动画开始的位置，'bottom', 'left', 'top', 'right'
+          origin: 'left',
+          // 回滚的时候是否再次触发动画
+          reset: false,
+          // 在移动端是否使用动画
+          mobile: false,
+          // 滚动的距离，单位可以用%，rem等
+          distance: '500px',
+          // 其他可用的动画效果
+          // opacity: 0.1,
+          easing: 'ease-in-out',
+          scale: 1
+        })
+      }
     }
   }
 }

@@ -5,7 +5,7 @@
       <div class="l">
         <Article :artInfo="artInfo"></Article>
         <div class="bottom-list">
-          <RelativeList></RelativeList>
+          <RelativeList :relativeId="artInfo.categoryId"></RelativeList>
         </div>
       </div>
       <div class="r">

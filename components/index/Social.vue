@@ -4,27 +4,27 @@
       <div class="social-content reveal-right">
         <div class="social-title">专题专栏</div>
         <div class="social-list">
-          <div class="item" v-for="i in 4" :key="i">
+          <div class="item" v-for="i in items" :key="i.id">
             <a href="#" class="img-wrap">
               <img
                 class="pic"
-                src="https://www.hust.edu.cn/__local/5/50/D3/52377B0F139D2D2D6EAD8579894_7CEB1C94_91FD.png"
+                :src="i.coverImage"
                 alt=""
               />
             </a>
             <div class="p">
               <div class="title">
-                <a href="#">新冠肺炎疫情dddddddd防控专题</a>
+                <a :href="i.description">{{i.title}}</a>
               </div>
               <div class="body">
-                针对近期武汉发生的新冠肺炎疫情，华中科技大学及附属医院迅速行动，众志成城。学校坚决贯彻落实习近平总书记的重要指示精神，采取多项举措确保全校师生员工身体健康和生命安全，打赢这场抗击新型肺炎的攻坚战。
+                {{i.keywords}}
               </div>
             </div>
           </div>
         </div>
         <div class="social-more">
           <!-- <a href="#" class="read-more">更多</a> -->
-          <a href="#" target="_blank"
+          <a href="/newslist/ztzl" target="_blank"
             ><span class="more-txt"
               >查看更多<span class="iconfont icon-more-line more-icon"></span
             ></span>
@@ -36,7 +36,28 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      items: []
+    }
+  },
+  async mounted() {
+    let res = await this.$axios.post('/api/web/article/articleByTagId', {
+      id: 5,
+      pageSize: 4,
+      pageNumber: 1,
+      orderType: 1
+    })
+    if (res.data.status == '9999') {
+      return
+    }
+    this.items = res.data.data.records
+    console.log('-------zzzzzz-------')
+    console.log(this.items)
+    console.log('-------zzzzzz-------end')
+  }
+}
 </script>
 
 <style lang="less">
