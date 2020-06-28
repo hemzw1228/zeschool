@@ -6,7 +6,7 @@
           class="link-item"
           :href="link.url"
           v-for="link in links"
-          :key="link.id"
+          :key="link.id" target="_blank"
           >{{ link.name }}</a
         >
         <!-- <a class="link-item" href="#" v-for="link in 6" :key="link">{{links[0].name}}</a>  -->

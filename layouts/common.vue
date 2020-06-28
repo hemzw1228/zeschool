@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Header :navs="navs"></Header>
+    <Header :navs="navs" :links="tLinks" ></Header>
     <nuxt />
-    <Bottom :links="links"></Bottom>
+    <Bottom :links="bLinks"></Bottom>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import Header from '~/components/common/PagesHeader.vue'
 import axios from 'axios'
 export default {
   data() {
-    return { navs: [], links: [] }
+    return { navs: [], bLinks: [],tLinks:[] }
   },
   components: {
     Bottom,
@@ -31,9 +31,11 @@ export default {
     // 2 友情链接 (post::web/link/qryLink  args::pageNumber:1,pageSize:6)
     let res_link = await axios.post('/api/web/link/qryLink', {
       pageNumber: 1,
-      pageSize: 6
+      pageSize: 9
     })
-    this.links = res_link.data.data.records
+
+    this.tLinks = res_link.data.data.records.slice(0,3)
+    this.bLinks = res_link.data.data.records.slice(3,9)
     // console.log('----res_link---')
     // 3 信息
   }

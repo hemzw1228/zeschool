@@ -10,8 +10,11 @@
           ><b-icon-search></b-icon-search
         ></span>
       </div>
-      <div class="top-link">
-        <a href="#">学生</a>|<a href="#">教务</a>|<a href="#">图书馆</a>
+      <div class="top-link" v-if="links[0]">
+        <a :href="links[0].url" target="_blank">{{ links[0].name }}</a
+        >|<a :href="links[1].url" target="_blank">{{ links[1].name }}</a
+        >|<a :href="links[2].url" target="_blank">{{ links[2].name }}</a
+        >
       </div>
     </div>
     <b-navbar toggleable="md" class="nav-d" print type="dark">
@@ -27,19 +30,15 @@
         <li v-for="nav in navs" :key="nav.id">
           <!-- 根据一级导航类型渲染导航页面（导航内容）|（导航列表页/**/child(0).navurl） -->
           <!-- <router-link :to="'/' + nav.id" @click.native="passid(nav.id)">{{ nav.name }}</router-link> -->
-          <router-link
-            :to="getToUrl(nav)"
-            >{{ nav.name }}</router-link
-          >
+          <router-link :to="getToUrl(nav)">{{ nav.name }}</router-link>
           <!-- <router-link :to="getToUrl(nav)" @click.native="passid(nav.id)">{{ nav.name }}</router-link> -->
 
           <!-- <router-link :to="{name:'fnav',params:{fnav:nav.url}}">{{ nav.name }}</router-link> -->
           <ul class=" mw-subnav">
             <li v-for="snav in nav.children" :key="snav.id">
-              <router-link
-                :to="'/' + nav.navUrl + '/' + snav.navUrl"
-                >{{ snav.name }}</router-link
-              >
+              <router-link :to="'/' + nav.navUrl + '/' + snav.navUrl">{{
+                snav.name
+              }}</router-link>
             </li>
           </ul>
         </li>
@@ -79,7 +78,7 @@ export default {
       searchtxt: 'aa'
     }
   },
-  props: ['navs'],
+  props: ['navs', 'links'],
   components: { BIconSearch },
   // mounted() {
   //   // console.log(this.navs)

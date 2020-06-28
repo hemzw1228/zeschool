@@ -20,9 +20,9 @@ export default {
     // 1 友情链接 (post::web/link/qryLink  args::pageNumber:1,pageSize:6)
     let res_link = await axios.post('/api/web/link/qryLink', {
       pageNumber: 1,
-      pageSize: 6
+      pageSize: 9
     })
-    this.links = res_link.data.data.records
+    this.links = res_link.data.data.records.slice(3,9)
     console.log('----res_link---')
     // 2 信息
   },

@@ -30,12 +30,17 @@ export default {
   data() {
     return {}
   },
-  async asyncData({ params, query, $axios }) {
+  async asyncData({ params, query, $axios,redirect}) {
     let res = await $axios.$post('/api/web/article/articleDetails', {
       id: params.id
     })
-    console.log('-----')
-    console.log(res.data)
+    console.log('---arttttt--')
+    console.log(res.data.keywords)
+    if(res.data.keywords !=="")
+    {
+      redirect(res.data.keywords)
+    }
+    
     return { artInfo: res.data }
   },
   layout: 'common',

@@ -4,22 +4,25 @@
       <span><b-icon icon="newspaper"></b-icon></span>
       最新新闻
     </div>
-    <div class="top-img">
-      <a href="#">
+    <div class="top-img" v-if="items[0]">
+      <router-link :to="'/news/' + items[0].id">
         <img
-          src="https://news.tsinghua.edu.cn/__local/2/EC/9F/5F907AFB724314398B708BD2107_C90E2F53_5E805.jpg"
+          :src="
+            items[0].coverImage == ''
+              ? ~/assets/gim / school.jpg
+              : items[0].coverImage
+          "
           alt=""
         />
-        <span class="img-title">清华大学档案工作报告会举行</span>
-      </a>
+        <span class="img-title">{{ items[0].title }}</span>
+      </router-link>
     </div>
     <ul class="line-list">
-      <li class="line-item" v-for="item in items" :key="item.id">
+      <li class="line-item" v-for="item in items.slice(1, 6)" :key="item.id">
         <div class="time ">
           <i class="arrow "><em></em></i>
           <code class="now"></code>
-          {{ item.createTime | shortDate}}
-          
+          {{ item.createTime | shortDate }}
         </div>
         <div class="title">
           <router-link :to="'/news/' + item.id">{{ item.title }}</router-link>
@@ -54,7 +57,7 @@ export default {
         url: 'newslist',
         orderType: 0,
         pageNumber: 1,
-        pageSize: 5
+        pageSize: 6
       })
 
       timeLine = res.data.data.records

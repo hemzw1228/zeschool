@@ -13,16 +13,17 @@
       class="spanner"
     >
       <!-- Text slides with image -->
-      <a href="#">
-        <b-carousel-slide
-          class="slide-item"
-          caption="第一张"
-          text="这是一个轮播的图，你可以点击查看详情"
-          img-src="https://www.tsinghua.edu.cn/__local/C/7F/0B/6E39229562CE1533AC64C95135B_C61E574F_7D43A.jpg"
-        >
-        </b-carousel-slide>
-      </a>
-      <a href="#">
+        <router-link :to="'/news/'+s.id" v-for="s in banners"  target="_blank" :key="s.id">
+          <b-carousel-slide
+            class="slide-item"
+            :caption="s.title"
+            :text="s.description.slice(0,50)"
+            :img-src="s.coverImage"
+          >
+          </b-carousel-slide>
+        </router-link>
+
+      <!-- <a href="#">
         <b-carousel-slide
           class="slide-item"
           caption="第二张"
@@ -39,7 +40,7 @@
           img-src="https://www.tsinghua.edu.cn/__local/F/18/D9/26956EC079FFCF0145957ED3163_C220831D_C3497.jpg"
         >
         </b-carousel-slide>
-      </a>
+      </a> -->
     </b-carousel>
 
     <!-- 要闻 -->
@@ -95,6 +96,13 @@ export default {
     const fnavs = navs.data.filter(e => e.pid === 0)
     // console.log(fnavs)
     // 2---获取轮播 (接口：web/article/articleBySlider)
+    let bannerRes = await $axios.$post('/api/web/article/articleByTagId', {
+      id: 7,
+      pageNumber: 1,
+      pageSize: 3
+    })
+    console.log('------------banner---------')
+    console.log(bannerRes.data.records)
 
     //获取文章
     // 3---tas接口(web/article/articleByTagId)
@@ -110,7 +118,7 @@ export default {
 
     // 获取版权信息 (web/base/baseInfo)
 
-    return {  navs: fnavs }
+    return { navs: fnavs, banners: bannerRes.data.records }
   },
   head() {
     return {
@@ -146,7 +154,7 @@ export default {
       alert(this.schTxt)
     }
   },
-  layout:"default"
+  layout: 'default'
 }
 </script>
 

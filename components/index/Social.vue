@@ -2,22 +2,22 @@
   <div class="social-container">
     <div class="w14">
       <div class="social-content reveal-right">
-        <div class="social-title">专题专栏</div>
+        <div class="social-title">新闻热点</div>
         <div class="social-list">
           <div class="item" v-for="i in items" :key="i.id">
-            <a href="#" class="img-wrap">
+            <router-link :to="'/news/'+i.id" class="img-wrap" target="_blank">
               <img
                 class="pic"
                 :src="i.coverImage"
                 alt=""
               />
-            </a>
+            </router-link>
             <div class="p">
               <div class="title">
-                <a :href="i.description">{{i.title}}</a>
+                <router-link :to="'/news/'+i.id" target="_blank">{{i.title}}</router-link>
               </div>
               <div class="body">
-                {{i.keywords}}
+                {{i.description}}
               </div>
             </div>
           </div>
