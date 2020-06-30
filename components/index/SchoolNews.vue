@@ -253,10 +253,14 @@ export default {
   .w14 {
     padding: 0 20px;
   }
+
   //   活动图片
   .img-a {
     img {
       height: 200px !important;
+    }
+    .img-title{
+      font-size: 16px!important;
     }
   }
   .cul-pic {
@@ -264,12 +268,16 @@ export default {
     img {
       width: 100%;
     }
+
   }
 
   //   .cul-container {
   //     width: 100%;
   //   }
   // 768 人文板块下标题间距
+  .cul-container{
+    display: none!important;
+  }
   .cul-title {
     padding: 16px !important;
 
@@ -379,6 +387,7 @@ export default {
 }
 
 .school-container {
+  min-height: 500px;
   padding-top: 100px;
   padding-bottom: 100px;
   // background-color: #f5f5ff;

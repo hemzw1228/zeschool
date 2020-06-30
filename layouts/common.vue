@@ -23,9 +23,10 @@ export default {
     //
     // 1 导航 (get::web/navbar/category )
     let res_navs = await axios.get('/api/web/navbar/category')
-    this.navs = res_navs.data.data.filter(e => {
-      return e.pid == 0
-    })
+    // this.navs = res_navs.data.data.filter(e => {
+    //   return e.pid == 0
+    // })
+    this.navs = res_navs.data.data.slice(0,8)
     this.$store.commit('storeNavs', this.navs)
 
     // 2 友情链接 (post::web/link/qryLink  args::pageNumber:1,pageSize:6)

@@ -1,35 +1,35 @@
 <template>
   <div class="social-container">
     <div class="w14">
-      <div class="social-content reveal-right">
-        <div class="social-title">新闻热点</div>
+      <div class="social-content  reveal-right">
+        <router-link to="/newslist/ztzl" target="_blank" class="title-link">
+          <div class="social-title">新闻热点 <span class="btn-more">>></span></div></router-link
+        >
+
         <div class="social-list">
           <div class="item" v-for="i in items" :key="i.id">
-            <router-link :to="'/news/'+i.id" class="img-wrap" target="_blank">
-              <img
-                class="pic"
-                :src="i.coverImage"
-                alt=""
-              />
+            <router-link :to="'/news/' + i.id" class="img-wrap" target="_blank">
+              <img class="pic" :src="i.coverImage" alt="" />
             </router-link>
             <div class="p">
               <div class="title">
-                <router-link :to="'/news/'+i.id" target="_blank">{{i.title}}</router-link>
+                <router-link :to="'/news/' + i.id" target="_blank">{{
+                  i.title
+                }}</router-link>
               </div>
               <div class="body">
-                {{i.description}}
+                {{ i.description }}
               </div>
             </div>
           </div>
         </div>
-        <div class="social-more">
-          <!-- <a href="#" class="read-more">更多</a> -->
+        <!-- <div class="social-more">
           <a href="/newslist/ztzl" target="_blank"
             ><span class="more-txt"
               >查看更多<span class="iconfont icon-more-line more-icon"></span
             ></span>
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -43,6 +43,30 @@ export default {
     }
   },
   async mounted() {
+    if (process.client) {
+        var s = require('scrollreveal')
+        var scrollReveal = s.default()
+    
+        scrollReveal.reveal('.reveal-right', {
+          // 动画的时长
+          duration: 1000,
+          // 延迟时间
+          delay: 200,
+          // 动画开始的位置，'bottom', 'left', 'top', 'right'
+          origin: 'right',
+          // 回滚的时候是否再次触发动画
+          reset: false,
+          // 在移动端是否使用动画
+          mobile: false,
+          // 滚动的距离，单位可以用%，rem等
+          distance: '500px',
+          // 其他可用的动画效果
+          opacity: 0.05,
+          easing: 'ease-in-out',
+          scale: 1
+        })
+
+      }
     let res = await this.$axios.post('/api/web/article/articleByTagId', {
       id: 5,
       pageSize: 4,
@@ -60,7 +84,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @media screen and(max-width: 1400px) {
   .w14 {
     width: 100% !important;
@@ -76,6 +100,9 @@ export default {
 @media screen and(max-width: 768px) {
   .w14 {
     padding: 0 20px;
+  }
+  .social-container{
+    padding-bottom:20px!important; 
   }
   .social-content {
     width: 100% !important;
@@ -93,17 +120,22 @@ export default {
       margin-bottom: 25px;
 
       .pic {
-        height: 100%;
-        width: 200px !important;
+        height: 100%!important;
+        width: 100px !important;
       }
       .p {
-        width: 60%;
+        // width: 60%;
         padding: 0 !important;
         // margin-left: 25px;
         height: 100px !important;
+        .title{
+          padding: 0 0 0 10px!important;
+        }
         .body {
           max-height: 70px;
           overflow: hidden;
+          padding: 0 0 0 10px!important;
+          line-height: 1.5!important;
         }
       }
     }
@@ -129,6 +161,7 @@ export default {
 
 // 大屏
 .social-container {
+  min-height: 150px;
   padding-bottom: 100px;
   box-sizing: content-box;
   //   height: 300px;
@@ -169,8 +202,9 @@ export default {
         // padding-bottom: 10px;
         text-align: left;
         overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        font-weight: 600;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
 
         a {
           color: #333;
@@ -194,53 +228,32 @@ export default {
     }
   }
 }
+
 .social-title {
   font-size: 28px;
   padding: 50px 0;
+  text-decoration: none;
 }
-.social-more {
-  margin: 50px 0 50px;
-  height: 40px;
-  line-height: 40px;
-  a {
-    font-size: 15px;
-    text-decoration: none;
-    // border: 1px solid #000;
-    display: inline-block;
-    // width: 200px;
-    .more-txt {
-      display: inline-block;
-      // width: 120px;
-      // background-color: #ccc;
-      color: #fff;
-      border-radius: 4px;
-      padding: 0 20px;
-      border: 1px solid #0e518b;
-      color: #0e518b;
-      &:hover {
-        color: #e85985;
-        border: 1px solid #e85985;
-      }
-    }
-    .more-icon {
-      margin-left: 5px;
-      font-size: 15px;
-    }
-  }
-}
-
-.read-more {
-  display: inline-block;
-  font-size: 14px;
-  width: 80px;
-  height: 40px;
-  // border: 1px solid #e85985;
-  line-height: 40px;
-  border-radius: 10px;
-  text-decoration: none !important;
+.title-link {
+  text-decoration: none;
   color: #333;
-  &:hover {
-    color: #e85985;
+  .social-title {
+    color: #333;
   }
-}
+  .btn-more {
+    font-size: 12px;
+    color: #333;
+    text-decoration: none;
+    padding-left: 10px;
+  }
+  &:hover {
+    .social-title,
+    .btn-more {
+      color: #e85985;
+    }
+  }
+} 
+
+
+
 </style>

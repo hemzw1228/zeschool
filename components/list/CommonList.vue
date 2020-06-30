@@ -3,7 +3,7 @@
     <div class="list-title">{{ title }}</div>
     <ul class="news-list">
       <li class="list-item" v-for="i in items" :key="i.id">
-        <span class="date-box">2020-06-20</span>
+        <span class="date-box">{{i.createTime|shortDate}}</span>
         <div class="news-title">
           <nuxt-link :to="'/news/' + i.id">{{ i.title }}</nuxt-link>
         </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import moment from "moment"
 export default {
   data() {
     return {
@@ -61,11 +62,17 @@ export default {
     console.log('----type-----')
     console.log(this.type)
     this.getNewsList()
+  },
+  filters:{
+    shortDate(val){
+      return moment(val).format("YYYY-MM-DD")
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
+
 .list-wrapper {
   // padding-bottom: 100px;
 }

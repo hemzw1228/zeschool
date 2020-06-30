@@ -4,7 +4,7 @@
     <!-- 轮播图 -->
     <b-carousel
       id="carousel-1"
-      :interval="40000"
+      :interval="3000"
       controls
       indicators
       fade
@@ -17,7 +17,7 @@
           <b-carousel-slide
             class="slide-item"
             :caption="s.title"
-            :text="s.description.slice(0,50)"
+    
             :img-src="s.coverImage"
           >
           </b-carousel-slide>
@@ -94,6 +94,7 @@ export default {
     // 1---获取导航
     let navs = await $axios.$get('/api/web/navbar/category')
     const fnavs = navs.data.filter(e => e.pid === 0)
+    // const fnavs = navs.data.slice(0,8)
     // console.log(fnavs)
     // 2---获取轮播 (接口：web/article/articleBySlider)
     let bannerRes = await $axios.$post('/api/web/article/articleByTagId', {
@@ -235,10 +236,17 @@ export default {
   .spanner {
     height: 500px;
   }
+  .slide-item{
+    .carousel-caption{
+      h3{
+        font-size: 14px!important;
+      }
+    }
+  }
 }
 @media screen and(max-width: 768px) {
   .spanner {
-    height: 200px;
+    height: 300px;
   }
 }
 </style>
