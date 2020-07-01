@@ -20,13 +20,15 @@
         @click="handleSearch"
       ></b-icon-search>
       <b-navbar-toggle
-        target="sidebar-1"
+        target="sidebar-2"
         class="tog-btn"
-        v-b-toggle.sidebar-1
+        v-b-toggle.sidebar-2
       ></b-navbar-toggle>
       <ul class="mzw-nav d-none  d-lg-flex   ">
         <li v-for="nav in navs" :key="nav.id">
-          <router-link :to="getToUrl(nav)" class="fnav-a">{{ nav.name }}</router-link>
+          <router-link :to="getToUrl(nav)" class="fnav-a">{{
+            nav.name
+          }}</router-link>
           <ul class=" mw-subnav">
             <li v-for="item in nav.children" :key="item.id">
               <router-link
@@ -41,17 +43,39 @@
           </ul>
         </li>
       </ul>
-      <b-sidebar id="sidebar-1" class="side-bar-nav">
-        <div class="px-3 py-2 nav-wrap">
-          <ul class="mini-nav">
-            <li class="nav-item"><a href="http://www.baidu.com">链接1</a></li>
-            <li class="nav-item"><a href="#">链接1</a></li>
-            <li class="nav-item"><a href="#">链接1</a></li>
-            <li class="nav-item"><a href="#">链接1</a></li>
-            <li class="nav-item"><a href="#">链接1</a></li>
-            <li class="nav-item"><a href="#">链接1</a></li>
-          </ul>
-        </div>
+      <b-sidebar right id="sidebar-2" class="side-bar-nav">
+        <el-menu
+          class="el-menu-vertical-demo"
+          :router="true"
+          background-color="#f8f9fa"
+        >
+          <template v-for="nav in navs">
+            <el-submenu
+              v-if="nav.children.length != 0"
+              :index="nav.navUrl"
+              :key="nav.id"
+            >
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>{{ nav.name }}</span>
+              </template>
+              <el-menu-item
+                :index="snav.navUrl"
+                :route="'/' + nav.navUrl + '/' + snav.navUrl"
+                v-for="snav in nav.children"
+                :key="snav.id"
+                >{{ snav.name }}</el-menu-item
+              >
+            </el-submenu>
+            <el-menu-item
+              v-else
+              :index="nav.navUrl"
+              :route="'/' + nav.navUrl"
+              :key="nav.id"
+              >{{ nav.name }}</el-menu-item
+            >
+          </template>
+        </el-menu>
       </b-sidebar>
     </b-navbar>
   </div>
@@ -112,23 +136,21 @@ export default {
 @cor_drop_ul: rgba(18, 75, 139, 0.514);
 
 @media screen and(max-width: 1500px) {
-  .fnav-a{
-    width: 100px!important;
+  .fnav-a {
+    width: 100px !important;
   }
-
 }
 @media screen and(max-width: 1200px) {
-  .fnav-a{
-    width: 80px!important;
+  .fnav-a {
+    width: 80px !important;
   }
 }
 @media screen and(max-width:768px ) {
   .nav-default {
-    height: 70px!important;
-    
+    height: 70px !important;
   }
   .logo {
-    width: 150px!important;
+    width: 150px !important;
   }
 }
 .tog-btn {
@@ -190,6 +212,7 @@ ul {
       line-height: 50px;
       color: #fff;
       border-left: 1px solid #000;
+      transition: all 0.5s;
       &:hover {
         color: #272727;
         background-color: @cor_li;
@@ -199,7 +222,11 @@ ul {
       display: none;
     }
     &:hover {
+      a {
+        width: 150px !important;
+      }
       .mw-subnav {
+        transition: all 0.5s;
         display: flex;
         position: absolute;
         z-index: 999;

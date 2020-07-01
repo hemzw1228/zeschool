@@ -43,22 +43,39 @@
         </li>
       </ul>
       <b-sidebar right id="sidebar-2" class="side-bar-nav">
-        <div class="px-3 py-2 nav-wrap">
-          <ul class="mini-nav">
-            <li class="nav-item" v-for="nav in navs" :key="nav.id">
-              <!-- <a href="http://www.baidu.com">链接1</a> -->
-              <!-- <router-link
-                :to="getToUrl(nav)"
-                @click.native="passNav(nav, nav.children)"
-                >{{ nav.name }}</router-link
-              > -->
-              <b-dropdown text="Button text via Prop" dropleft>
-                <b-dropdown-item href="#">An item</b-dropdown-item>
-                <b-dropdown-item href="#">Another item</b-dropdown-item>
-              </b-dropdown>
-            </li>
-          </ul>
-        </div>
+        <el-menu
+          class="el-menu-vertical-demo"
+          :router="true"
+          background-color="#f8f9fa"
+        >
+          <el-menu-item index="/" route="/">首页</el-menu-item>
+          <template v-for="nav in navs">
+            <el-submenu
+              v-if="nav.children.length != 0"
+              :index="nav.navUrl"
+              :key="nav.id"
+            >
+              <template slot="title">
+                <!-- <i class="el-icon-menu"></i> -->
+                <span>{{ nav.name }}</span>
+              </template>
+              <el-menu-item
+                :index="snav.navUrl"
+                :route="'/' + nav.navUrl + '/' + snav.navUrl"
+                v-for="snav in nav.children"
+                :key="snav.id"
+                >{{ snav.name }}</el-menu-item
+              >
+            </el-submenu>
+            <el-menu-item
+              v-else
+              :index="nav.navUrl"
+              :route="'/' + nav.navUrl"
+              :key="nav.id"
+              >{{ nav.name }}</el-menu-item
+            >
+          </template>
+        </el-menu>
       </b-sidebar>
     </b-navbar>
     <div class="page-img-wrapper">

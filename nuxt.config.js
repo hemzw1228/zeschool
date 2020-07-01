@@ -30,7 +30,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/w_t.js'],
+  plugins: ['~/plugins/w_t.js', '@/plugins/element-ui'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -78,7 +78,19 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
-    vendor: ['axios','scrollreveal'],
-  },
-  
+    vendor: ['axios', 'scrollreveal', 'element-ui'],
+    // analyze: true,
+    // maxChunkSize: 300000,
+    babel: {
+      plugins: [
+        [
+          'component',
+          {
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-chalk'
+          }
+        ]
+      ]
+    }
+  }
 }

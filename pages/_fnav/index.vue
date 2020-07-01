@@ -4,48 +4,27 @@
     <div class="news-container">
       <div class="r">
         <div class="info">
-          <!-- <div class="crumb-nav">
-            <b-breadcrumb :items="items" class="mcurmb"></b-breadcrumb>
-          </div> -->
-          <div class="info-title">{{navInfo.name}}</div>
-          <div class="content" v-html="artInfo.content" >
-         
-            </div>
+          <div class="info-title" v-if="navInfo">{{ navInfo.name }}</div>
+          <div class="content" v-html="artInfo.content"></div>
         </div>
       </div>
     </div>
-    <!-- <Bottom></Bottom> -->
+
   </div>
 </template>
 
 <script>
-// import Bottom from '~/components/common/Bottom.vue'
-// import PagesHeader from '~/components/common/PagesHeader.vue'
+
 export default {
   validate({ params }) {
-    // 必须是number类型
-    // return /^\d+$/.test(params.fnav)
     return true
   },
   data() {
     return {
-      items: [
-        {
-          text: '首页',
-          href: '#'
-        },
-        {
-          text: '学校情况',
-          href: '#'
-        },
-        {
-          text: '学校介绍',
-          active: true
-        }
-      ]
+      navInfo: {}
     }
   },
-  async asyncData({ params, error, redirect, $axios, route,store }) {
+  async asyncData({ params, error, redirect, $axios, route, store }) {
     console.log('----')
     console.log(params)
     if (params.fnav == 'ing') {
@@ -54,24 +33,31 @@ export default {
         message: 'err'
       })
     }
-    let resData= await $axios.$post('/api/web/article/articleDetailsByUrl',{
-      url:params.fnav
+    let resData = await $axios.$post('/api/web/article/articleDetailsByUrl', {
+      url: params.fnav
     })
-    let navInfo = store.state.navs.find(e=>e.navUrl==params.fnav)
+    let navInfo = store.state.navs.find(e => e.navUrl == params.fnav)
+   
+    console.log(store.state.navs)
     console.log(resData)
     return {
       fnav: params.fnav,
       snav: params.snav,
-      artInfo:resData.data,
-      navInfo:navInfo
+      artInfo: resData.data,
+      navInfo: navInfo
     }
   },
   //   props: ['fnav', 'snav'],
   // beforeRouteUpdate(to, from, next) {
   //   alert(1)
   // },
-  mounted() {
-    
+  mounted() {},
+  watch: {
+    '$store.state.navs': function(val) {
+      // let navInfo = this.$store.state.navs.find(e => e.navUrl == this.fnav)
+      let navInfo = val.find(e => e.navUrl == this.fnav)
+      this.navInfo = navInfo
+    }
   },
 
   components: {
@@ -111,7 +97,6 @@ export default {
   width: 1200px;
   margin: 0 auto;
   .r {
-    // background-color: yellowgreen;
     width: 100%;
   }
 }

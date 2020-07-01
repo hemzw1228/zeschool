@@ -13,15 +13,19 @@
       class="spanner"
     >
       <!-- Text slides with image -->
-        <router-link :to="'/news/'+s.id" v-for="s in banners"  target="_blank" :key="s.id">
-          <b-carousel-slide
-            class="slide-item"
-            :caption="s.title"
-    
-            :img-src="s.coverImage"
-          >
-          </b-carousel-slide>
-        </router-link>
+      <router-link
+        :to="'/news/' + s.id"
+        v-for="s in banners"
+        target="_blank"
+        :key="s.id"
+      >
+        <b-carousel-slide
+          class="slide-item"
+          :caption="s.title"
+          :img-src="s.coverImage"
+        >
+        </b-carousel-slide>
+      </router-link>
 
       <!-- <a href="#">
         <b-carousel-slide
@@ -42,7 +46,7 @@
         </b-carousel-slide>
       </a> -->
     </b-carousel>
-
+   
     <!-- 要闻 -->
     <Special></Special>
     <Notice></Notice>
@@ -236,10 +240,10 @@ export default {
   .spanner {
     height: 500px;
   }
-  .slide-item{
-    .carousel-caption{
-      h3{
-        font-size: 14px!important;
+  .slide-item {
+    .carousel-caption {
+      h3 {
+        font-size: 14px !important;
       }
     }
   }

@@ -8,7 +8,6 @@
           <ul class="side-list">
             <li class="item" v-for="nav in sideNavs" :key="nav.id">
               <router-link
-                @click.native="passNav(nav)"
                 :to="'/' + fnavInfo.navUrl + '/' + nav.navUrl"
                 :class="nav.navUrl == navInfo.navUrl ? 'active' : ''"
                 >{{ nav.name }}</router-link
@@ -77,24 +76,10 @@ export default {
   //   alert(1)
   // },
   mounted() {
-    // this.fnavInfo = this.$store.state.fnav
-    // this.sideNavs = this.$store.state.childrenNav
-    // this.navInfo = this.$store.state.nav
-    // console.log('snav  获取 navs 1')
-    // console.log('m-----------')
-    // this.navs = this.$store.state.navs
-    // console.log(this.navs)
-    // console.log(this.$route.params)
-    // console.log('m-----------')
     this.renderSiderBar()
   },
   watch: {
     '$store.state.navs': function(val) {
-      // console.log('w-----------')
-      // this.navs = val
-      // console.log(this.navs)
-      // console.log(this.$route.params)
-      // console.log('w-----------')
       this.renderSiderBar()
     }
   },
@@ -130,9 +115,6 @@ export default {
         text:navInfo.name,
         active:true
       })
-    },
-    passNav(nav) {
-      this.$store.commit('passNav', nav)
     }
   }
 }
