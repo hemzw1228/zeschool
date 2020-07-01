@@ -11,13 +11,13 @@
             </div>
           </li>
         </ul>
-        <!-- <b-pagination
+        <b-pagination
           @change="getP"
           v-model="currentPage"
           :total-rows="total"
           :per-page="perPage"
           aria-controls="my-table"
-        ></b-pagination> -->
+        ></b-pagination>
       </div>
     </div>
   </div>
@@ -26,41 +26,68 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { get } from 'http';
 
 export default {
   validate({ params, query, $axios }) {
     return true
   },
-  mounted() {},
+  mounted() {
+    this.getP(1)
+  },
   data() {
     return {
-      items: [
-        { id: 1, createTime: '2020-1-1', title: 'ttttttttttt' },
-        { id: 2, createTime: '2020-1-1', title: 'ttttttttttt' },
-        { id: 3, createTime: '2020-1-1', title: 'ttttttttttt' },
-        { id: 4, createTime: '2020-1-1', title: 'ttttttttttt' }
-      ]
+      total: 0,
+      perPage: 10,
+      currentPage: 1,
+      items: []
     }
   },
   async asyncData({ params, $axios, query, app }) {
-    console.log('---正在搜索---')
-    console.log(query)
-    let res = await $axios.$post('/api/web/article/articleQryByTitle', {
-      keywords: query.sctxt
-    })
-    console.log(res)
-    // if (res.data != null && res.data != []) {
-    //   return { items: res.data,sctxt: query.sctxt }
-    // } else {
-    //   return { items:[],sctxt: query.sctxt }
+    // console.log('---正在搜索---')
+    // console.log(query)
+    // let res = await $axios.$post('/api/web/article/articleQryByTitle', {
+    //   keywords: query.sctxt,
+    //   pageSize: 10,
+    //   pageNumber: 1
+    // })
+    // console.log(res)
+    // if (res.status == '9999') {
+    //   return
+    // }
+    // return {
+    //   items: res.data.records,
+    //   sctxt: query.sctxt,
+    //   total: res.data.total
     // }
   },
-  watchQuery: ['sctxt'],
-
+  // watchQuery: ['sctxt'],
   watch: {
-    '$store.state.navs': function(val) {}
+    '$route.query': function(val) {this.getP(0)}
   },
-  methods: {},
+  methods: {
+    getP(p) {
+      this.currentPage = p
+      this.getNewsList()
+    },
+    async getNewsList() {
+      console.log('---正在搜索---')
+      console.log(this.$route.query.sctxt)
+      let data = {
+        pageNumber: this.currentPage,
+        pageSize: this.perPage,
+        keywords: this.$route.query.sctxt
+      }
+      let res = await this.$axios.post(
+        '/api/web/article/articleQryByTitle',
+        data
+      )
+      console.log('-----search---')
+      console.log(res.data.data)
+      this.total = res.data.data.total
+      this.items = res.data.data.records
+    }
+  },
   layout: 'common',
   filters: {
     shortDate(val) {
@@ -74,6 +101,17 @@ export default {
 @media screen and (max-width: 1400px) {
   .search-container {
     width: 100% !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .search-container {
+    padding: 0px !important;
+  }
+  .list-wrapper {
+    padding: 20px !important;
+  }
+  .list-title {
+    font-size: 20px !important;
   }
 }
 
