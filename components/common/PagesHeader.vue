@@ -13,8 +13,7 @@
       <div class="top-link" v-if="links[0]">
         <a :href="links[0].url" target="_blank">{{ links[0].name }}</a
         >|<a :href="links[1].url" target="_blank">{{ links[1].name }}</a
-        >|<a :href="links[2].url" target="_blank">{{ links[2].name }}</a
-        >
+        >|<a :href="links[2].url" target="_blank">{{ links[2].name }}</a>
       </div>
     </div>
     <b-navbar toggleable="md" class="nav-d" print type="dark">
@@ -48,11 +47,15 @@
           <ul class="mini-nav">
             <li class="nav-item" v-for="nav in navs" :key="nav.id">
               <!-- <a href="http://www.baidu.com">链接1</a> -->
-              <router-link
+              <!-- <router-link
                 :to="getToUrl(nav)"
                 @click.native="passNav(nav, nav.children)"
                 >{{ nav.name }}</router-link
-              >
+              > -->
+              <b-dropdown text="Button text via Prop" dropleft>
+                <b-dropdown-item href="#">An item</b-dropdown-item>
+                <b-dropdown-item href="#">Another item</b-dropdown-item>
+              </b-dropdown>
             </li>
           </ul>
         </div>
@@ -164,6 +167,9 @@ export default {
 }
 // 头部768以下小屏导航条固定搜索隐藏
 @media screen and (max-width: 768px) {
+  .pages-img {
+    display: none;
+  }
   .header {
     display: flex;
     flex-direction: column;
@@ -175,7 +181,9 @@ export default {
   }
 
   .menu-btn {
+    // position: absolute;
     color: #fff;
+    right: 0;
   }
   .nav-d {
     background-color: #0e518b !important;
@@ -332,8 +340,10 @@ ul {
 .pages-img {
   margin: 0 auto;
   overflow: hidden;
+  height: 250px;
   img {
     width: 100%;
+    height: 100%;
   }
 }
 </style>

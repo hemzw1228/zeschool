@@ -5,7 +5,7 @@
         <div class="notice-title">校内通知<span class="btn-more">>></span></div>
       </router-link>
       <!-- <div class="notice-title">校内通知<span class="btn-more">>></span></div> -->
-      <div class="notice-list " >
+      <div class="notice-list ">
         <div class="item " v-for="(notice, index) in notices" :key="notice.id">
           <div class="top" v-bind:style="{ background: bgcs[index] }"></div>
           <div class="date">
@@ -13,7 +13,10 @@
             {{ notice.createTime | dateYM }}
           </div>
           <div class="msg-body">
-            <a class="b-title" href="#">{{ notice.title.slice(0,20) }}{{notice.title.length>20?"...":""}}</a>
+            <a class="b-title" :href="'/news/' + notice.id"
+              >{{ notice.title.slice(0, 20)
+              }}{{ notice.title.length > 20 ? '...' : '' }}</a
+            >
             <span class="b-msg">{{ notice.description.slice(0, 20) }}...</span>
           </div>
         </div>
@@ -103,6 +106,7 @@ export default {
 
 @media screen and(max-width: 768px) {
   .notice-container {
+    padding-top: 0 !important;
     padding-bottom: 10px !important;
   }
   .w14 {
@@ -119,21 +123,43 @@ export default {
       width: 100% !important;
       margin-bottom: 20px;
       .top {
-        height: 80px !important;
+        height: 60px !important;
       }
       .date {
+      
+        width: 50px!important;
+        height: 50px!important;
+        background-color: #4b4545;
+        left: 10px!important;
         top: 5px !important;
+    
+        font-size: 10px!important;
+        span {
+    
+          font-size: 25px!important;
+          line-height: 25px!important;
+          height: 25px!important;
+          padding:  0!important;
+       
+        }
+      }
+      .msg-body {
+        padding: 10px 10px !important;
+        text-align: left;
+        font-size: 14px!important;
+        height: 50px!important;
       }
     }
-    .item:nth-child(n + 3) {
-      display: none;
-    }
+    // .item:nth-child(n + 3) {
+    //   display: none;
+    // }
   }
 }
 // 常规
 .notice-container {
   padding: 20px 0 100px 0;
   background-color: #f5f5f5;
+  min-height: 150px;
 }
 .w14 {
   width: 1400px;

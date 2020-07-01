@@ -3,7 +3,7 @@
   <div>
     <!-- 二级响应式导航条 -->
     <b-navbar
-      toggleable="md"
+      toggleable="lg"
       :class="['nav-default ', navBarFixed !== false ? 'nav-fix' : '']"
       type="dark"
       print
@@ -19,13 +19,23 @@
         class="h3 text-white m-search"
         @click="handleSearch"
       ></b-icon-search>
-      <b-navbar-toggle target="sidebar-1" v-b-toggle.sidebar-1></b-navbar-toggle>
-      <ul class="mzw-nav d-none  d-md-flex   ">
+      <b-navbar-toggle
+        target="sidebar-1"
+        class="tog-btn"
+        v-b-toggle.sidebar-1
+      ></b-navbar-toggle>
+      <ul class="mzw-nav d-none  d-lg-flex   ">
         <li v-for="nav in navs" :key="nav.id">
-          <router-link :to="getToUrl(nav)">{{ nav.name }}</router-link>
+          <router-link :to="getToUrl(nav)" class="fnav-a">{{ nav.name }}</router-link>
           <ul class=" mw-subnav">
             <li v-for="item in nav.children" :key="item.id">
-              <router-link :to="{path:'/'+nav.navUrl+'/'+item.navUrl,query: { id: item.id}}">{{item.name}}</router-link>
+              <router-link
+                :to="{
+                  path: '/' + nav.navUrl + '/' + item.navUrl,
+                  query: { id: item.id }
+                }"
+                >{{ item.name }}</router-link
+              >
               <!-- <a :href="'/'+nav.navUrl+'/'+item.navUrl">{{item.name}}</a> -->
             </li>
           </ul>
@@ -100,13 +110,38 @@ export default {
 @cor_b5: #0e518b;
 @cor_li: rgba(211, 208, 58, 0.8);
 @cor_drop_ul: rgba(18, 75, 139, 0.514);
+
+@media screen and(max-width: 1500px) {
+  .fnav-a{
+    width: 100px!important;
+  }
+
+}
+@media screen and(max-width: 1200px) {
+  .fnav-a{
+    width: 80px!important;
+  }
+}
+@media screen and(max-width:768px ) {
+  .nav-default {
+    height: 70px!important;
+    
+  }
+  .logo {
+    width: 150px!important;
+  }
+}
+.tog-btn {
+  padding: 0;
+  margin-right: 30px;
+}
 .logo {
   display: inline-block;
   width: 260px;
   height: 55px;
   background: url(~assets/img/logo.png) no-repeat center center;
   background-size: contain;
-  margin-left: 100px;
+  // margin-left: 100px;
 }
 .logo-fix {
   // background-size:200px;
@@ -141,7 +176,7 @@ ul {
   margin: 0;
   width: 100%;
   justify-content: flex-end;
-  margin-right: 8rem;
+  margin-right: 25px;
   height: 50px;
   li {
     float: left;
@@ -201,7 +236,7 @@ nav.nav-fix {
 }
 .m-search {
   position: absolute;
-  right: 5rem;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;

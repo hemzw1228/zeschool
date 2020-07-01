@@ -307,3 +307,41 @@
   - categoryId 获取列表
   - 根据newslist 获取侧边栏获取最新的新闻列表
 
+
+### 服务器
+
+- nginx
+
+  ```
+  upstream ze{
+          server 127.0.0.1:3000;  #反向代理地址
+          keepalive 64;
+  }
+  server {
+          listen 80;
+          server_name 47.105.223.27;  #监听地址
+          location / {
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "upgrade";
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Nginx-Proxy true;
+                  proxy_cache_bypass $http_upgrade;
+                  proxy_pass http://ze;
+          }
+          location ~\.(txt)$ {
+                  root /var/www/jnode/;
+          }
+  }
+  
+  ```
+
+- pm2 
+
+  - pm2 start npm --name test -- run start   #启动npm run start  
+    - 注意**npm run 的运行目录**
+  - pm2 list   # 查看
+  - pm2 delete [name|id|all]
+
+  - pm2 stop [name]
+  - pm2 restart [name]

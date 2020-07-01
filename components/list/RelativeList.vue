@@ -4,7 +4,7 @@
     <ul class="news-list">
       <li class="list-item" v-for="i in items" :key="i.id">
         <div class="date-box"><span>{{i.createTime|dateDay}}</span>{{i.createTime|dateYM}}</div>
-        <div class="news-title"><a href="#">{{i.title}}</a></div>
+        <div class="news-title"><router-link :to="'/news/'+i.id">{{i.title}}</router-link></div>
       </li>
     </ul>
   </div>
@@ -39,6 +39,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .list-wrapper {
   // padding-bottom: 100px;
 }
@@ -57,6 +58,7 @@ export default {
   border-bottom: 1px solid #dcdcdc;
   //    align-items:flex-start;
   .date-box {
+    flex-shrink: 0;
     height: 60px;
     width: 60px;
     // border: 1px solid #000;
@@ -74,7 +76,9 @@ export default {
   .news-title {
     //   border: 1px solid #000;
     padding: 10px 0 10px 20px;
-    font-size: 12px;
+    font-size: 14px;
+    text-align: left;
+    
     a {
       color: #333;
       text-decoration: none;

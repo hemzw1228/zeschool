@@ -1,13 +1,16 @@
 <template>
   <div class="special-container clearfix">
     <div class="w14 reveal-vis">
-      <div class="news-title">校园.要闻</div>
-      <!-- 要闻1 -->
-      <div
-        class="row-list row1"
-        
+      <router-link to="/newslist/xnyw" target="_blank" class="title-link">
+        <div class="news-title">校园.要闻<span class="btn-more">>></span></div></router-link
       >
-        <div class="row-img row1-1 " v-if="titleList.length != 0 && coverNews.length != 0">
+
+      <!-- 要闻1 -->
+      <div class="row-list row1">
+        <div
+          class="row-img row1-1 "
+          v-if="titleList.length != 0 && coverNews.length != 0"
+        >
           <div class="inner">
             <router-link :to="'/news/' + coverNews[0].id">
               <div
@@ -23,11 +26,12 @@
         <div class="row-news row1-2">
           <div class="news-item" v-for="i in titleList.slice(0, 4)" :key="i.id">
             <router-link :to="'/news/' + i.id">
-              <div class="title">{{ i.title }}</div>
+              <div class="title"><i style="color:#666">{{i.createTime|MDDate}}</i>  {{ i.title }}</div>
             </router-link>
           </div>
         </div>
       </div>
+      <!-- 768 隐藏 -->
       <div
         class="row-list row2"
         v-if="titleList.length != 0 && coverNews.length != 0"
@@ -48,26 +52,25 @@
         <div class="row-news row2-2">
           <div class="news-item" v-for="i in titleList.slice(4, 8)" :key="i.id">
             <router-link :to="'/news/' + i.id">
-              <div class="title">{{ i.title }}</div>
+              <div class="title"><i style="color:#666">{{i.createTime|MDDate}} </i>{{ i.title }}</div>
             </router-link>
           </div>
         </div>
       </div>
-      <!-- 按钮 未完成 -->
-      <div class="read-more">
+
+      <!-- <div class="read-more">
         <router-link to="/newslist/xnyw" target="_blank"
           ><span class="more-txt"
             >查看更多<span class="iconfont icon-more-line more-icon"></span
           ></span>
         </router-link>
-      </div>
+      </div> -->
     </div>
-    <!-- 标题  未完成 -->
   </div>
 </template>
 
 <script>
-import { duration } from 'moment'
+import moment from 'moment'
 export default {
   data() {
     return {
@@ -96,6 +99,11 @@ export default {
       if (val == 2) {
         this.addAction()
       }
+    }
+  },
+  filters:{
+    MDDate(val){
+      return moment(val).format("YYYY-MM-DD")
     }
   },
   methods: {
@@ -161,6 +169,8 @@ export default {
 <style scoped lang="less">
 .special-container {
   background-color: #f5f5ff;
+  padding-bottom: 100px;
+  min-height: 500px;
 }
 // 1400以下宽度100%
 @media screen and(max-width: 1400px) {
@@ -180,6 +190,12 @@ export default {
   .w14 {
     padding: 0 20px !important;
   }
+  .special-container{
+    padding-bottom: 30px!important;
+  }
+   .row2{
+    display: none!important;
+  }
   .row-list {
     flex-direction: column;
     .row-img {
@@ -188,23 +204,56 @@ export default {
     .row-news {
       width: 100% !important;
     }
+    .news-item{
+      width: 100%!important;
+      margin-top: 20px!important;
+      .title{
+        padding: 20px 20px!important;
+        font-size: 16px!important;
+      }
+    }
   }
-  .row1-1,
-  .row2-2 {
-    margin-bottom: 20px;
-  }
+  // .row1-1,
+  // .row2-2 {
+  //   margin-bottom: 20px;
+  // }
   .news-title {
     font-size: 18px !important;
     padding: 20px !important;
   }
-  .read-more {
-    margin: 10px 0 !important;
-    .more-txt {
-      border: none !important;
+  .specal-img-title{
+    font-size: 16px!important;
+  }
 
-      &:hover {
-        border: none !important;
-      }
+  // .read-more {
+  //   margin: 10px 0 !important;
+  //   .more-txt {
+  //     border: none !important;
+
+  //     &:hover {
+  //       border: none !important;
+  //     }
+  //   }
+  // }
+ 
+}
+
+.title-link {
+  text-decoration: none;
+  color: #333;
+  .news-title {
+    color: #333;
+  }
+  .btn-more {
+    font-size: 12px;
+    color: #333;
+    text-decoration: none;
+    padding-left: 10px;
+  }
+  &:hover {
+    .news-title,
+    .btn-more {
+      color: #e85985;
     }
   }
 }
@@ -268,6 +317,7 @@ export default {
           font-size: 16px;
           padding: 40px 30px;
           position: relative;
+          word-break: break-all;
           &:hover .title {
             color: #01294c;
           }
@@ -314,34 +364,34 @@ export default {
 
 // 底部更多样式
 
-.read-more {
-  margin: 50px 0;
-  width: 100%;
-  a {
-    margin-left: -12px;
-    font-size: 15px;
-    text-decoration: none;
-    // border: 1px solid #000;
-    display: inline-block;
-    // width: 200px;
-    .more-txt {
-      display: inline-block;
-      // width: 120px;
-      // background-color: #ccc;
-      color: #fff;
-      border-radius: 4px;
-      padding: 0 20px;
-      border: 1px solid #0e518b;
-      color: #0e518b;
-      &:hover {
-        color: #e85985;
-        border: 1px solid #e85985;
-      }
-    }
-    .more-icon {
-      margin-left: 5px;
-      font-size: 15px;
-    }
-  }
-}
+// .read-more {
+//   margin: 50px 0;
+//   width: 100%;
+//   a {
+//     margin-left: -12px;
+//     font-size: 15px;
+//     text-decoration: none;
+//     // border: 1px solid #000;
+//     display: inline-block;
+//     // width: 200px;
+//     .more-txt {
+//       display: inline-block;
+//       // width: 120px;
+//       // background-color: #ccc;
+//       color: #fff;
+//       border-radius: 4px;
+//       padding: 0 20px;
+//       border: 1px solid #0e518b;
+//       color: #0e518b;
+//       &:hover {
+//         color: #e85985;
+//         border: 1px solid #e85985;
+//       }
+//     }
+//     .more-icon {
+//       margin-left: 5px;
+//       font-size: 15px;
+//     }
+//   }
+// }
 </style>

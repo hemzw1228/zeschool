@@ -6,7 +6,7 @@
     <div class="article-content" v-html="artInfo.content"></div>
     <div class="date-wrapper">
       <div class="article-time">
-        2020年06月12日 17:40:30
+      {{artInfo.createTime}}
       </div>
     </div>
   </div>
@@ -27,9 +27,12 @@ export default {
 // 1200以下内容区域样式
 @media screen and(max-width: 1000px) {
   .article-content {
-    font-size: 18px !important;
+    font-size: 16px !important;
     padding: 20px !important;
     // line-height: 2;
+  }
+  .article-title{
+    font-size: 18px!important;
   }
 }
 .article-container {
