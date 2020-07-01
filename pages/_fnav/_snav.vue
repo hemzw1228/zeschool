@@ -2,7 +2,7 @@
   <div class="page">
     <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
-      <div class="l">
+      <div class="snav-l">
         <div class="side-nav">
           <div class="side-title">{{ fnavInfo.name }}</div>
           <ul class="side-list">
@@ -16,7 +16,7 @@
           </ul>
         </div>
       </div>
-      <div class="r">
+      <div class="snav-r">
         <div class="info">
           <div class="crumb-nav">
             <b-breadcrumb :items="items" class="mcurmb"></b-breadcrumb>
@@ -120,16 +120,16 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // 1200以下隐藏左侧 只显示内容区域
 @media screen and (max-width: 1200px) {
   .news-container {
     width: 100% !important;
   }
-  .l {
+  .snav-l {
     display: none;
   }
-  .r {
+  .snav-r {
     width: 100% !important;
   }
 }
@@ -143,14 +143,14 @@ export default {
   justify-content: space-between;
   width: 1200px;
   margin: 0 auto;
-  .l {
+  .snav-l {
     width: 300px;
     // height: 500px;
     flex: 0 0 auto;
     // background-color: pink;
     padding-bottom: 50px;
   }
-  .r {
+  .snav-r {
     // background-color: yellowgreen;
     width: 860px;
   }

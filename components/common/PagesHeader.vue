@@ -184,6 +184,9 @@ export default {
 }
 // 头部768以下小屏导航条固定搜索隐藏
 @media screen and (max-width: 768px) {
+  .top-link{
+    display: none!important;
+  }
   .pages-img {
     display: none;
   }

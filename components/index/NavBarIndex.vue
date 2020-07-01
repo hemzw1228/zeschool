@@ -56,7 +56,7 @@
               :key="nav.id"
             >
               <template slot="title">
-                <i class="el-icon-menu"></i>
+                
                 <span>{{ nav.name }}</span>
               </template>
               <el-menu-item

@@ -2,10 +2,10 @@
   <div class="page">
     <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
-      <div class="l">
+      <div class="newslist-l">
         <CommonList  :type="$route.params.type" :title="typeTitle"></CommonList>
       </div>
-      <div class="r">
+      <div class="newslist-r">
         <HotList></HotList>
       </div>
     </div>
@@ -154,12 +154,12 @@ export default {
   }
 }
 @media screen and (max-width: 1000px) {
-  .r {
+  .newslist-r {
     display: none;
   }
 
   .news-container,
-  .l {
+  .newslist-l {
     width: 100% !important;
     padding: 0 20px;
   }
@@ -174,12 +174,12 @@ export default {
   width: 1400px;
   margin: 0px auto;
   padding: 50px 0;
-  .l {
+  .newslist-l {
     width: 70%;
     // height: 500px;
     // background-color: pink;
   }
-  .r {
+  .newslist-r {
     width: 20%;
     // height: 500px;
     // background-color: blue;

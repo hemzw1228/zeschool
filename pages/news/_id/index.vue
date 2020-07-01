@@ -2,13 +2,13 @@
   <div class="page">
     <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
-      <div class="l">
+      <div class="news-l">
         <Article :artInfo="artInfo"></Article>
         <div class="bottom-list">
           <RelativeList :relativeId="artInfo.categoryId"></RelativeList>
         </div>
       </div>
-      <div class="r">
+      <div class="news-r">
         <TimelineList></TimelineList>
       </div>
     </div>
@@ -66,12 +66,12 @@ export default {
   }
 }
 @media screen and (max-width: 1000px) {
-  .r {
+  .news-r {
     display: none;
   }
 
   .news-container,
-  .l {
+  .news-l {
     width: 100% !important;
   }
 }
@@ -87,13 +87,13 @@ export default {
   // margin: 50px auto;
   margin: 0 auto;
   padding: 50px 0;
-  .l {
+  .news-l {
     width: 70%;
   }
-  .bottom-list {
+  .news-bottom-list {
     padding: 0 50px;
   }
-  .r {
+  .news-r {
     width: 20%;
   }
 }

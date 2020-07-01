@@ -6,7 +6,7 @@
     <div class="article-content" v-html="artInfo.content"></div>
     <div class="date-wrapper">
       <div class="article-time">
-      {{artInfo.createTime}}
+        {{ artInfo.createTime }}
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style lang="less" >
+<style lang="less">
 // 1200以下内容区域样式
 @media screen and(max-width: 1000px) {
   .article-content {
@@ -31,14 +31,16 @@ export default {
     padding: 20px !important;
     // line-height: 2;
   }
-  .article-title{
-    font-size: 18px!important;
+  .article-title {
+    font-size: 18px !important;
   }
 }
 .article-container {
   width: 100%;
   padding-bottom: 50px;
-
+  p {
+    word-break: break-all;
+  }
   hr {
     height: 1px;
     color: #ccc;
@@ -59,7 +61,7 @@ export default {
     img {
       width: calc(80% - 20px);
     }
-    p{
+    p {
       text-align: left;
     }
   }
