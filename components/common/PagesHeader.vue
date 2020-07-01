@@ -112,7 +112,8 @@ export default {
   async fetch({ store, params }) {},
   methods: {
     handleSearch() {
-      alert(this.searchtxt)
+      this.$router.push('/search?sctxt='+this.searchtxt)
+      this.searchtxt=""
     },
     // passNav(nav, addNav) {
     //   // 1 主要逻辑是

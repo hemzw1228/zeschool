@@ -26,27 +26,8 @@
         >
         </b-carousel-slide>
       </router-link>
-
-      <!-- <a href="#">
-        <b-carousel-slide
-          class="slide-item"
-          caption="第二张"
-          text="这是一个轮播的图，你可以点击查看详情"
-          img-src="https://www.tsinghua.edu.cn/__local/E/A3/1E/994D9ED46CD5D7929628C16B795_E2104B13_56B61.jpg"
-        >
-        </b-carousel-slide>
-      </a>
-      <a href="#">
-        <b-carousel-slide
-          class="slide-item"
-          caption="第三张"
-          text="这是一个轮播的图，你可以点击查看详情"
-          img-src="https://www.tsinghua.edu.cn/__local/F/18/D9/26956EC079FFCF0145957ED3163_C220831D_C3497.jpg"
-        >
-        </b-carousel-slide>
-      </a> -->
     </b-carousel>
-   
+
     <!-- 要闻 -->
     <Special></Special>
     <Notice></Notice>
@@ -132,7 +113,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: 'My custom description'
+          content: '郑州电子商务职业学院欢迎你'
         }
       ]
     }
@@ -156,7 +137,8 @@ export default {
       this.spop = false
     },
     handleSearch() {
-      alert(this.schTxt)
+      this.$router.push('/search?sctxt=' + this.schTxt)
+      this.schTxt = ''
     }
   },
   layout: 'default'
@@ -219,6 +201,11 @@ export default {
       cursor: pointer;
       color: red;
     }
+  }
+}
+@media screen and (max-width: 1024px) {
+  .content {
+    width: 100% !important;
   }
 }
 
