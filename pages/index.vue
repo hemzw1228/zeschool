@@ -45,7 +45,7 @@
         >
         </b-carousel-slide>
       </a> -->
-    </b-carousel>p
+    </b-carousel>
    
     <!-- 要闻 -->
     <Special></Special>
