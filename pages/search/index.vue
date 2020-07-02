@@ -2,7 +2,8 @@
   <div class="page">
     <div class="search-container">
       <div class="list-wrapper">
-        <div class="list-title">搜索结果</div>
+        <div class="list-title">搜索结果 </div>
+        <div class="search-info">关键词："{{sctxt}}"--->共检索到了{{ total }}记录</div>
         <ul class="news-list">
           <li class="list-item" v-for="i in items" :key="i.id">
             <span class="date-box">{{ i.createTime | shortDate }}</span>
@@ -11,6 +12,7 @@
             </div>
           </li>
         </ul>
+       
         <b-pagination
           @change="getP"
           v-model="currentPage"
@@ -26,7 +28,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-import { get } from 'http';
+import { get } from 'http'
 
 export default {
   validate({ params, query, $axios }) {
@@ -40,6 +42,7 @@ export default {
       total: 0,
       perPage: 10,
       currentPage: 1,
+      sctxt:"",
       items: []
     }
   },
@@ -61,12 +64,16 @@ export default {
     //   total: res.data.total
     // }
   },
-  // watchQuery: ['sctxt'],
+  watchQuery: ['sctxt'],
   watch: {
-    '$route.query': function(val) {this.getP(0)}
+    '$route.query': function(val) {
+      console.log('aaa')
+      this.getP(1)
+    }
   },
   methods: {
     getP(p) {
+      console.log(p)
       this.currentPage = p
       this.getNewsList()
     },
@@ -76,7 +83,7 @@ export default {
       let data = {
         pageNumber: this.currentPage,
         pageSize: this.perPage,
-        keywords: this.$route.query.sctxt
+        keywords: this.$route.query.sctxt,
       }
       let res = await this.$axios.post(
         '/api/web/article/articleQryByTitle',
@@ -86,6 +93,7 @@ export default {
       console.log(res.data.data)
       this.total = res.data.data.total
       this.items = res.data.data.records
+      this.sctxt = this.$route.query.sctxt
     }
   },
   layout: 'common',
@@ -174,5 +182,14 @@ export default {
   &:hover {
     background: #fff;
   }
+}
+
+.search-info {
+  text-align: left;
+  padding: 20px 20px;
+  font-size: 14px;
+  font-weight: 400;
+  color:#666;
+  // padding-left:20px;
 }
 </style>

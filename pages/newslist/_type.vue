@@ -137,7 +137,11 @@ export default {
       }
       // console.log(navs)
       let fnav = navs.find(e => e.navUrl == 'newslist')
-      // console.log(fnav)
+
+      console.log(fnav)
+      // fnav带存储到store
+      this.$store.commit('passFnav',fnav)
+      // 
       let navInfo = fnav.children.find(e => e.navUrl == this.$route.params.type)
       this.typeTitle = navInfo.name
     }

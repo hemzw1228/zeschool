@@ -80,10 +80,13 @@
     </b-navbar>
     <div class="page-img-wrapper">
       <div class="pages-img">
-        <img
+        <!-- {{fnav}} -->
+        <!-- {{FN}} -->
+        <!-- <img
           src="https://www.tsinghua.edu.cn/newthu/newthu_cnt/images/employmenttop_03.jpg"
           alt=""
-        />
+        /> -->
+        <img :src="navImg == '' ? defaultImg : navImg" alt="" />
       </div>
     </div>
   </div>
@@ -95,10 +98,13 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      searchtxt: 'aa'
+      searchtxt: '',
+      navImg: '',
+      defaultImg:
+        'https://www.tsinghua.edu.cn/newthu/newthu_cnt/images/employmenttop_03.jpg'
     }
   },
-  props: ['navs', 'links'],
+  props: ['navs', 'links', 'FN'],
   components: { BIconSearch },
   // mounted() {
   //   // console.log(this.navs)
@@ -109,11 +115,25 @@ export default {
   //   console.log('pagesHeader  -- created')
   //   console.log(this.navs)
   // },
-  async fetch({ store, params }) {},
+  mounted() {
+    console.log('-------common mounted-------')
+    console.log(this.$store.state.fnav)
+  },
+  watch: {
+    '$store.state.fnav': function(val) {
+      console.log('-----common watch-------')
+      console.log(val.coverImg)
+      this.navImg = val.coverImg
+    }
+  },
   methods: {
     handleSearch() {
-      this.$router.push('/search?sctxt='+this.searchtxt)
-      this.searchtxt=""
+      if (this.searchtxt == '') {
+        alert('请输入关键词')
+        return
+      }
+      this.$router.push('/search?sctxt=' + this.searchtxt)
+      this.searchtxt = ''
     },
     // passNav(nav, addNav) {
     //   // 1 主要逻辑是
@@ -185,8 +205,8 @@ export default {
 }
 // 头部768以下小屏导航条固定搜索隐藏
 @media screen and (max-width: 768px) {
-  .top-link{
-    display: none!important;
+  .top-link {
+    display: none !important;
   }
   .pages-img {
     display: none;

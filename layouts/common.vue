@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :navs="navs" :links="tLinks" ></Header>
+    <Header :navs="navs" :links="tLinks" :FN="FN" ></Header>
     <nuxt />
     <Bottom :links="bLinks"></Bottom>
   </div>
@@ -12,7 +12,7 @@ import Header from '~/components/common/PagesHeader.vue'
 import axios from 'axios'
 export default {
   data() {
-    return { navs: [], bLinks: [],tLinks:[] }
+    return { navs: [], bLinks: [],tLinks:[],FN:{} }
   },
   components: {
     Bottom,
@@ -28,7 +28,9 @@ export default {
     })
     // this.navs = res_navs.data.data
     this.$store.commit('storeNavs', this.navs)
-
+    console.log('-------common    ----------')
+    console.log(this.navs)
+    this.FN = this.navs[0]
     // 2 友情链接 (post::web/link/qryLink  args::pageNumber:1,pageSize:6)
     let res_link = await axios.post('/api/web/link/qryLink', {
       pageNumber: 1,

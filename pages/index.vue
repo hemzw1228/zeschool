@@ -137,6 +137,10 @@ export default {
       this.spop = false
     },
     handleSearch() {
+      if(this.schTxt==""){
+        alert('请输入关键词')
+        return
+      }
       this.$router.push('/search?sctxt=' + this.schTxt)
       this.schTxt = ''
     }

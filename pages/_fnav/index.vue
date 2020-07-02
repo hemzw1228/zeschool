@@ -2,19 +2,17 @@
   <div class="page">
     <!-- <PagesHeader></PagesHeader> -->
     <div class="news-container">
-      <div class="r">
+      <div class="fnav-r">
         <div class="info">
           <div class="info-title" v-if="navInfo">{{ navInfo.name }}</div>
           <div class="content" v-html="artInfo.content"></div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-
 export default {
   validate({ params }) {
     return true
@@ -37,8 +35,11 @@ export default {
       url: params.fnav
     })
     let navInfo = store.state.navs.find(e => e.navUrl == params.fnav)
-   
-    console.log(store.state.navs)
+    // 加载状态存储
+    console.log('-------------加载---------------')
+    console.log(navInfo)
+    store.commit('passFnav',navInfo)
+
     console.log(resData)
     return {
       fnav: params.fnav,
@@ -56,6 +57,10 @@ export default {
     '$store.state.navs': function(val) {
       // let navInfo = this.$store.state.navs.find(e => e.navUrl == this.fnav)
       let navInfo = val.find(e => e.navUrl == this.fnav)
+      // 监视状态存储
+      console.log('----监视----')
+      console.log(navInfo)
+      this.$store.commit('passFnav',navInfo)
       this.navInfo = navInfo
     }
   },
@@ -82,7 +87,7 @@ export default {
   .news-container {
     width: 100% !important;
   }
-  .r {
+  .fnav-r {
     width: 100% !important;
   }
 }
@@ -96,7 +101,7 @@ export default {
   justify-content: space-between;
   width: 1200px;
   margin: 0 auto;
-  .r {
+  .fnav-r {
     width: 100%;
   }
 }

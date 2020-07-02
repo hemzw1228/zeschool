@@ -50,7 +50,7 @@ export default {
       navs: [],
       fnavInfo: {},
       sideNavs: [],
-      navInfo: []
+      navInfo: {}
     }
   },
   async asyncData({ params, $axios, store }) {
@@ -80,6 +80,7 @@ export default {
   },
   watch: {
     '$store.state.navs': function(val) {
+      console.log('监视')
       this.renderSiderBar()
     }
   },
@@ -103,7 +104,14 @@ export default {
       let children = fnavInfo.children
       // 当前nav
       let navInfo = children.find(e => e.navUrl == surl)
+
+
       this.fnavInfo = fnavInfo
+      // 存储当前 nav 
+      console.log(fnavInfo)
+      this.$store.commit('passFnav',fnavInfo)
+
+
       this.sideNavs = children
       this.navInfo = navInfo
       // 渲染面包屑
