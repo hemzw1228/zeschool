@@ -69,7 +69,7 @@ export default {
   },
   proxy: {
     '/api/': {
-      target: 'http://47.105.223.27:8081/',
+      target: 'http://39.106.50.170:8081/',
       pathRewrite: { '^/api/': '' }
     }
   },
