@@ -128,7 +128,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 // 1200以下隐藏左侧 只显示内容区域
 @media screen and (max-width: 1200px) {
   .news-container {
@@ -233,6 +233,7 @@ export default {
     margin-bottom: 100px;
     p {
       text-align: left;
+      // text-indent: 2em;
     }
     img {
       text-align: center;

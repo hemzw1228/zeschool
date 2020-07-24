@@ -6,7 +6,8 @@
           class="link-item"
           :href="link.url"
           v-for="link in links"
-          :key="link.id" target="_blank"
+          :key="link.id"
+          target="_blank"
           >{{ link.name }}</a
         >
         <!-- <a class="link-item" href="#" v-for="link in 6" :key="link">{{links[0].name}}</a>  -->
@@ -27,12 +28,13 @@
       </b-col>
     </b-row>
     <b-row class="footer-info" align-h="center">
-      <b-col cols="12" md="10"
-        ><span class="info-item">京ICP备05065075号-1</span>
-        <span class="info-item">京ICP备05065075号-1</span>
-        <span class="info-item">京ICP备05065075号-1</span>
-        <span class="info-item">京ICP备05065075号-1</span></b-col
-      >
+      <b-col cols="12" md="10">
+        <span class="info-item">邮编450000</span>
+        <span class="info-item">郑州市管城区金岱路186号</span>
+        
+        <span class="info-item">豫ICP备XXXXX号-1</span>
+        <span class="info-item">版权所有©郑州电子商务学院</span>
+      </b-col>
     </b-row>
   </b-container>
 </template>
