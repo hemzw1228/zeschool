@@ -6,17 +6,18 @@
           class="link-item"
           :href="link.url"
           v-for="link in links"
-          :key="link.id" target="_blank"
+          :key="link.id"
+          target="_blank"
           >{{ link.name }}</a
         >
         <!-- <a class="link-item" href="#" v-for="link in 6" :key="link">{{links[0].name}}</a>  -->
       </b-col>
       <b-col cols="12" class="footer-share" md="2">
-        <a href="#" class="share-item"
+        <a class="share-item"
           ><span class="iconfont icon-weixin1" title="关注微信"></span>
           <img class="share-img" src="~/assets/img/weixin.jpg" alt="" />
         </a>
-        <a href="#" class="share-item"
+        <a class="share-item"
           ><span class="iconfont icon-weibo" title="关注微博"></span>
           <img class="share-img" src="~/assets/img/xinlang.png" alt="" />
         </a>
@@ -93,6 +94,7 @@ export default {
 .footer-share {
   margin-top: -12px;
   .share-item {
+    cursor: pointer;
     position: relative;
     float: left;
     width: 50px;

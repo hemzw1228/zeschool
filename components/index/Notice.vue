@@ -42,7 +42,7 @@ export default {
       // console.log(s)
       scrollReveal.reveal('.reveal-bottom', {
         // 动画的时长
-        duration: 800,
+        duration: 1000,
         // 延迟时间
         delay: 100,
         // 动画开始的位置，'bottom', 'left', 'top', 'right'

@@ -87,8 +87,8 @@ export default {
       pageNumber: 1,
       pageSize: 3
     })
-    console.log('------------banner---------')
-    console.log(bannerRes.data.records)
+    // console.log('------------banner---------')
+    // console.log(bannerRes.data.records)
 
     //获取文章
     // 3---tas接口(web/article/articleByTagId)
@@ -114,6 +114,11 @@ export default {
           hid: 'description',
           name: 'description',
           content: '郑州电子商务职业学院欢迎你'
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: '电子商务,郑州职业学院,电商学院,郑州电商,郑州电子商务职业学院'
         }
       ]
     }
@@ -137,7 +142,7 @@ export default {
       this.spop = false
     },
     handleSearch() {
-      if(this.schTxt==""){
+      if (this.schTxt == '') {
         alert('请输入关键词')
         return
       }

@@ -1,6 +1,7 @@
 ### 接口
 
 - url:http://47.105.223.27:8081
+- http://39.106.50.170:8081
 - 导航 /web/navbar/category
 ```json
  {
@@ -58,7 +59,7 @@
 -  根据标签Id查询文章列表 /web/article/articleByTagId
 ```
  
- 参数  id（tagid）   pageNumber pageSize  orderType;//0:时间，1：浏览次数
+ 参数  id（tagid）   pageNumber pageSize  orderType;//1:时间，0：浏览次数
 ```
 
 ```json

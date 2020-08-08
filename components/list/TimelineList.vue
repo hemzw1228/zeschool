@@ -48,9 +48,9 @@ export default {
   async mounted() {
     var timeLine = this.$store.state.timeLine
 
-    console.log('----Timeline---')
-    console.log(this.$store.state.timeLine)
-    console.log('----Timeline---')
+    // console.log('----Timeline---')
+    // console.log(this.$store.state.timeLine)
+    // console.log('----Timeline---')
     // console.log(hotList.length)
     if (timeLine.length == 0) {
       let res = await this.$axios.post('/api/web/article/articleListByUrl', {
@@ -63,11 +63,11 @@ export default {
       timeLine = res.data.data.records
       // this.$store.commit('storeNavs', this.navs)
       this.$store.commit('setTimeLine', timeLine)
-      console.log(this.$store.state.timeLine)
-      console.log('t-请求数据-')
+      // console.log(this.$store.state.timeLine)
+      // console.log('t-请求数据-')
     }
     this.items = timeLine
-    console.log(this.items)
+    // console.log(this.items)
   },
   filters: {
     shortDate: function(value) {

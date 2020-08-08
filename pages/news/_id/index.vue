@@ -20,8 +20,6 @@
 import Article from '~/components/content/Article.vue'
 import RelativeList from '~/components/list/RelativeList.vue'
 import TimelineList from '~/components/list/TimelineList.vue'
-// import Bottom from '~/components/common/Bottom.vue'
-// import PagesHeader from '~/components/common/PagesHeader.vue'
 export default {
   validate({ params }) {
     // 必须是number类型
@@ -30,17 +28,16 @@ export default {
   data() {
     return {}
   },
-  async asyncData({ params, query, $axios,redirect}) {
+  async asyncData({ params, query, $axios, redirect }) {
     let res = await $axios.$post('/api/web/article/articleDetails', {
       id: params.id
     })
-    console.log('---arttttt--')
-    console.log(res.data.keywords)
-    if(res.data.keywords !=="")
-    {
+    // console.log('---arttttt--')
+    // console.log(res.data.keywords)
+    if (res.data.keywords !== '') {
       redirect(res.data.keywords)
     }
-    
+
     return { artInfo: res.data }
   },
   layout: 'common',
@@ -48,8 +45,19 @@ export default {
     Article,
     RelativeList,
     TimelineList
-    // Bottom,
-    // PagesHeader
+  },
+  head() {
+    return {
+      title: this.artInfo.title,
+      meta: [
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content:
+            '电子商务,郑州职业学院,电商学院,郑州电商,郑州电子商务职业学院'
+        }
+      ]
+    }
   }
 }
 </script>

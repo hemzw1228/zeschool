@@ -113,14 +113,14 @@ export default {
         pageNumber: 1,
         pageSize: 8,
         id: 1,
-        orderType: 0
+        orderType: 1
       })
       if (res.data.status == '9999') {
         return
       }
 
       this.titleList = res.data.data.records
-      console.log(this.titleList)
+      // console.log(this.titleList)
     },
     async getCoverNews() {
       // tagid:6  要闻大图
@@ -128,13 +128,13 @@ export default {
         pageNumber: 1,
         pageSize: 2,
         id: 6,
-        orderType: 0
+        orderType: 1
       })
       if (res.data.status == '9999') {
         return
       }
       this.coverNews = res.data.data.records
-      console.log(this.coverNews)
+      // console.log(this.coverNews)
     },
     addAction() {
       if (process.client) {
@@ -154,7 +154,7 @@ export default {
           // 在移动端是否使用动画
           mobile: false,
           // 滚动的距离，单位可以用%，rem等
-          distance: '500px',
+          distance: '50px',
           // 其他可用的动画效果
           // opacity: 0.1,
           easing: 'ease-in-out',

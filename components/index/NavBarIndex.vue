@@ -13,7 +13,7 @@
       /></b-navbar-brand> -->
       <a
         :class="['logo ', navBarFixed !== false ? 'logo-fix' : '']"
-        href="#"
+        
       ></a>
       <b-icon-search
         class="h3 text-white m-search"
@@ -94,7 +94,7 @@ export default {
     BIconSearch
   },
   mounted() {
-    console.log('created')
+    // console.log('created')
     window.addEventListener('scroll', this.watchScroll)
   },
   methods: {

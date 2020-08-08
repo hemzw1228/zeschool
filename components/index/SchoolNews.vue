@@ -6,8 +6,8 @@
         <div class="cul-container">
           <div class="cul-pic">
             <img
-              src="https://www.pku.edu.cn/Uploads/Picture/2020/01/09/s5e16f6cb80581.jpg"
-              alt=""
+              src="~/assets/img/hengtu.jpg"
+              alt="图片"
             />
           </div>
           <div class="cul-title">
@@ -85,13 +85,13 @@ export default {
   },
   watch: {
     imgList(val) {
-      console.log('----------watch---------')
+      // console.log('----------watch---------')
       if (val.length == 2) {
         this.isOk = true
         this.addAction()
-        console.log(this.isOk)
+        // console.log(this.isOk)
       }
-      console.log('---------watchend---------')
+      // console.log('---------watchend---------')
     }
   },
   methods: {
@@ -112,7 +112,7 @@ export default {
           // 在移动端是否使用动画
           mobile: false,
           // 滚动的距离，单位可以用%，rem等
-          distance: '500px',
+          distance: '50px',
           // 其他可用的动画效果
           opacity: 0.05,
           easing: 'ease-in-out',
@@ -130,14 +130,14 @@ export default {
           // 在移动端是否使用动画
           mobile: false,
           // 滚动的距离，单位可以用%，rem等
-          distance: '500px',
+          distance: '50px',
           // 其他可用的动画效果
           opacity: 0.05,
           easing: 'ease-in-out',
           scale: 1
         })
 
-        console.log('-------addaction-----------scholl')
+        // console.log('-------addaction-----------scholl')
       }
     },
     async getTopImg() {
@@ -160,9 +160,9 @@ export default {
         return
       }
       this.topArticle = res.data.data.records[0]
-      console.log('toparticle-----')
-      console.log(res.data)
-      console.log('toparticle-----end')
+      // console.log('toparticle-----')
+      // console.log(res.data)
+      // console.log('toparticle-----end')
     },
     async getImgList() {
       let res = await this.$axios.post('/api/web/article/articleByTagId', {
@@ -175,9 +175,9 @@ export default {
         return
       }
       this.imgList = res.data.data.records
-      console.log('imgList-----')
-      console.log(res.data)
-      console.log('imgList-----end')
+      // console.log('imgList-----')
+      // console.log(res.data)
+      // console.log('imgList-----end')
     }
   }
 }

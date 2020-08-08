@@ -24,7 +24,8 @@
       ></b-navbar-toggle>
       <ul class="m-nav d-none  d-md-flex   ">
         <li>
-          <router-link to="/">首页</router-link>
+          <!-- <router-link to="/">首页</router-link> -->
+          <a href="/">首页</a>
         </li>
         <li v-for="nav in navs" :key="nav.id">
           <!-- 根据一级导航类型渲染导航页面（导航内容）|（导航列表页/**/child(0).navurl） -->
@@ -106,23 +107,14 @@ export default {
   },
   props: ['navs', 'links', 'FN'],
   components: { BIconSearch },
-  // mounted() {
-  //   // console.log(this.navs)
-  //   console.log('mounted')
-  //   console.log('------' + this.navs)
-  // },
-  // created() {
-  //   console.log('pagesHeader  -- created')
-  //   console.log(this.navs)
-  // },
   mounted() {
-    console.log('-------common mounted-------')
-    console.log(this.$store.state.fnav)
+    // console.log('-------common mounted-------')
+    // console.log(this.$store.state.fnav)
   },
   watch: {
     '$store.state.fnav': function(val) {
-      console.log('-----common watch-------')
-      console.log(val.coverImg)
+      // console.log('-----common watch-------')
+      // console.log(val.coverImg)
       this.navImg = val.coverImg
     }
   },
@@ -135,45 +127,6 @@ export default {
       this.$router.push('/search?sctxt=' + this.searchtxt)
       this.searchtxt = ''
     },
-    // passNav(nav, addNav) {
-    //   // 1 主要逻辑是
-    //   // 1.1 如果点击了父亲 想显示第一个儿子
-    //   // 1.2存储的nav 和渲染的url 逻辑 一样
-
-    //   // 2 参数介绍
-    //   // 2.1 addNav----多变！！！
-    //   // 2.2 nav 为父导航时，addNav 为该导航下的所有儿子
-    //   // 2.3 nav 为子导航时，addNav 为 父导航
-
-    //   if (nav.pid == 0 && nav.children[0]) {
-    //     // nav 父导航，addNav 为子导航
-    //     console.log('点了一级导航')
-    //     console.log(nav.children[0])
-    //     console.log(addNav)
-    //     console.log(nav)
-    //     console.log('点击结束')
-
-    //     // 当前的nav
-    //     this.$store.commit('passNav', nav.children[0])
-    //     // 当前nav 的兄弟
-    //     this.$store.commit('passChildrenNav', addNav)
-    //     // 当前nav 的父亲
-    //     this.$store.commit('passFnav', nav)
-    //   } else {
-    //     // nav 为子导航， addNav 为父导航
-    //     console.log('点了二级子导航')
-    //     console.log(nav)
-    //     console.log(addNav.children)
-    //     console.log(addNav)
-    //     console.log('点击结束')
-    //     // 当前的nav
-    //     this.$store.commit('passNav', nav)
-    //     // 当前nav的兄弟
-    //     this.$store.commit('passChildrenNav', addNav.children)
-    //     // 当前nav的父亲
-    //     this.$store.commit('passFnav', addNav)
-    //   }
-    // },
     getToUrl(nav) {
       // 渲染一级导航的url
       // 有子导航的直接渲染为第一个孩子的url
